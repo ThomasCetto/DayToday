@@ -1,22 +1,20 @@
-const express = require('express');
-const cors = require('cors');
+import express, { json } from 'express';
+import cors from 'cors';
+import connectDB from "./config/db.js";
+
 const app = express();
-const PORT = 5000;
+
 
 // Middleware
-app.use(cors());          // allow frontend requests
-app.use(express.json());  // parse JSON body
+app.use(cors());
+app.use(json());
 
-// Example API route
-app.get('/api/hello', (req, res) => {
-  res.json({ msg: "Hello from Express backend 🚀" });
-});
+connectDB();
+
+
 
 // Start server
+const PORT = 5000;
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
-});
-
-app.get('/', (req, res) => {
-  res.send('Backend is running 🚀');
 });
