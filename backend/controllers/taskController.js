@@ -4,17 +4,6 @@ import { TaskInstance } from "../models/TaskInstance.js";
 import { checkField } from "../utils/inputUtils.js";
 import { timeGap } from "../utils/dateUtils.js";
 
-const createTaskInstances = async (req, res)  => {
-    let datesList = timeGap(req.body.date, req.body.gapAmount, req.body.gapType);
-    for (let i = 0; i < 30; i++) {
-        const newInstance = new TaskInstance({
-            task: newTask._id,
-            date: Date.parse(datesList[i]),
-            is_completed: false
-        });
-        await newInstance.save();
-    }
-}
 
 export const createTask = async (req, res) => {
     const neededParams = ['title', 'description', 'date', 'gapAmount', 'gapType'];
@@ -32,14 +21,13 @@ export const createTask = async (req, res) => {
         // Create 30 task instances
         let datesList = timeGap(req.body.date, req.body.gapAmount, req.body.gapType);
         for (let i = 0; i < 30; i++) {
-            console.log("saving");
-            console.log(datesList[i]);
 
             const newInstance = new TaskInstance({
                 task: newTask._id,
-                date: Date.parse(datesList[i]),
-                is_completed: false
+                date: datesList[i],
+                isCompleted: false
             });
+
             await newInstance.save();
         }
 
@@ -75,7 +63,6 @@ export const deleteTask = async (req, res) => {
     if (!id || !id.match(/^[0-9a-fA-F]{24}$/)) {
         return res.status(400).json({ error: "Invalid task ID" });
     }
-    console.log("deleteing ", id);
     
     try {
         // Check if the task exists
@@ -127,11 +114,10 @@ export const patchTask = async (req, res) => {
         // Create 30 task instances
         let datesList = timeGap(req.body.date, req.body.gapAmount, req.body.gapType);
         for (let i = 0; i < 30; i++) {
-            console.log("saving");
             const newInstance = new TaskInstance({
                 task: newTask._id,
-                date: Date.parse(datesList[i]),
-                is_completed: false
+                date: datesList[i],
+                isCompleted: false
             });
             await newInstance.save();
         }

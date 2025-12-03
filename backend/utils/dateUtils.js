@@ -1,17 +1,18 @@
 export function timeGap(start, amount, type) {
-  // date is accepted as yyyy-mm-dd
-  type = type.toLowerCase();
+  // date is accepted as yyyy-mm-dd String type
   // Type can be either day, week, month, year 
+  type = type.toLowerCase();
   const out = [];
-  const date = new Date(start);
+
+  const date = new Date(new Date(start).toUTCString());
   const addType = { day: "Date", week: "Date", month: "Month", year: "FullYear" }[type];
 
   for (let i = 0; i < 30; i++) {
     const newDate = new Date(date);
     const extra = type === "week" ? amount * 7 : amount;
-    // Dinamically calls: setDate, setMonth, setFullYear and getDate, ...
+    // Dinamically calls: newDate.setDate(...), setMonth, setFullYear, with getDate, ...
     newDate[`set${addType}`](newDate[`get${addType}`]() + extra * i);
-    out.push(format(newDate));
+    out.push(newDate);
   }
   return out;
 }

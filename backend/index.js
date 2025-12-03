@@ -2,6 +2,7 @@ import express, { json } from 'express';
 import cors from 'cors';
 import connectDB from "./config/db.js";
 import taskRoutes from "./routes/taskRoutes.js";
+import taskInstanceRoutes from "./routes/taskInstanceRoutes.js";
 
 const app = express();
 
@@ -14,6 +15,7 @@ app.use(express.urlencoded({ extended: true }));
 connectDB();
 
 app.use("/tasks", taskRoutes);
+app.use("/taskInstances", taskInstanceRoutes);
 
 
 
