@@ -1,6 +1,6 @@
 # DayToday
 
-To run the backend:
+To run the backend (at port 5000):
 ```
 cd backend
 npm run dev
@@ -8,7 +8,7 @@ npm run dev
 
 
 
-To run the frontend:
+To run the frontend (at port 3000):
 ```
 npm start
 ```

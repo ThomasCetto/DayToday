@@ -2,11 +2,11 @@ import mongoose from "mongoose";
 const {Schema} = mongoose;
 
 const taskSchema = new Schema({
-    title: String,
-    description: String,
-    date: Date,
-    every_how_much_amount: Number,
-    every_how_much_type: String
+    title: { type: String, required: true},
+    description: { type: String, required: true},
+    date: { type: Date, required: true},
+    gapAmount: { type: Number, required: true},
+    gapType: { type: String, required: true}
 });
 
 export const Task = mongoose.model("Task", taskSchema);
