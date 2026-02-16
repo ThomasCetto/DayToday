@@ -1,13 +1,14 @@
 import { Task } from "../models/Task.js";
 import { TaskInstance } from "../models/TaskInstance.js";
 
-import { checkField } from "../utils/inputUtils.js";
+import { checkFields } from "../utils/inputUtils.js";
 import { timeGap } from "../utils/dateUtils.js";
+import { config } from "../config/config.js";
 
 
 export const createTask = async (req, res) => {
-    const neededParams = ['title', 'description', 'date', 'gapAmount', 'gapType'];
-    const paramError = checkField(req.body, neededParams);
+    const neededParams = ['title', 'description', 'creation_date', 'date', 'gapAmount', 'gapType'];
+    const paramError = checkFields(req.body, neededParams);
     if (paramError.length !== 0) {  // if some param is missing
         return res.status(400).json({ error: paramError });
     }
@@ -15,21 +16,8 @@ export const createTask = async (req, res) => {
     req.body.gapType = req.body.gapType.toLowerCase();
     const newTask = new Task({ ...req.body });
     try {
-        // Crete the task
         await newTask.save();
-
-        // Create 30 task instances
-        let datesList = timeGap(req.body.date, req.body.gapAmount, req.body.gapType);
-        for (let i = 0; i < 30; i++) {
-
-            const newInstance = new TaskInstance({
-                task: newTask._id,
-                date: datesList[i],
-                isCompleted: false
-            });
-
-            await newInstance.save();
-        }
+        await createInstances(req, newTask);
 
         res.status(200).json({ message: "task created" });
     } catch (error) {
@@ -83,15 +71,14 @@ export const deleteTask = async (req, res) => {
 
 export const patchTask = async (req, res) => {
     const { id } = req.params;
-    const { title, description, date, gapAmount, gapType } = req.body;
+    const { title, description, creation_date, date, gapAmount, gapType } = req.body;
 
-    // Task to delete id check
     if (!id || !id.match(/^[0-9a-fA-F]{24}$/)) {
         return res.status(400).json({ error: "Invalid task ID" });
     }
-    // New Task data check
-    const neededParams = ['title', 'description', 'date', 'gapAmount', 'gapType'];
-    const paramError = checkField(req.body, neededParams);
+    // Check if params are correct
+    const neededParams = ['title', 'description', 'creation_date', 'date', 'gapAmount', 'gapType'];
+    const paramError = checkFields(req.body, neededParams);
     if (paramError.length !== 0) {  // if some param is missing
         return res.status(400).json({ error: paramError });
     }
@@ -103,24 +90,15 @@ export const patchTask = async (req, res) => {
         if (!existingTask) {
             return res.status(404).json({ error: "Task not found" });
         }
-        // Delete old
+        // Delete old task and its instances
         await TaskInstance.deleteMany({ task: id });
         await Task.findByIdAndDelete(id);
 
-        // And create the new patched Task
+        // And create the new patched Task, and new instances
         const newTask = new Task({ ...req.body });
         await newTask.save();
 
-        // Create 30 task instances
-        let datesList = timeGap(req.body.date, req.body.gapAmount, req.body.gapType);
-        for (let i = 0; i < 30; i++) {
-            const newInstance = new TaskInstance({
-                task: newTask._id,
-                date: datesList[i],
-                isCompleted: false
-            });
-            await newInstance.save();
-        }
+        await createInstances(req, newTask);
 
         res.status(200).json({ message: "Task edited successfully", task: newTask });
     } catch (err) {
@@ -128,4 +106,17 @@ export const patchTask = async (req, res) => {
         res.status(500).json({ error: "Server error" });
     }
 };
+
+const createInstances = async (req, newTask) => {
+    let datesList = timeGap(req.body.date, req.body.gapAmount, req.body.gapType);
+    const instances = [];
+    for (let i = 0; i < config.TASK_INSTANCE_COUNT; i++) {
+        instances.push({
+            task: newTask._id,
+            date: datesList[i],
+            isCompleted: false
+        });
+    }
+    await TaskInstance.insertMany(instances);
+}
 

@@ -1,5 +1,5 @@
 import { TaskInstance } from "../models/TaskInstance.js";
-import { checkField } from "../utils/inputUtils.js";
+import { checkFields } from "../utils/inputUtils.js";
 
 
 export const getTaskInstance = async (req, res) => {
@@ -40,7 +40,7 @@ export const deleteTaskInstance = async (req, res) => {
 
 export const patchTaskInstance = async (req, res) => {
     const neededParams = ['isCompleted', 'date'];
-    const paramError = checkField(req.body, neededParams);
+    const paramError = checkFields(req.body, neededParams);
     if (paramError.length !== 0) {  // if some param is missing
         return res.status(400).json({ error: paramError });
     }
