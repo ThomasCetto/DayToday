@@ -1,6 +1,6 @@
 export function timeGap(start, amount, type) {
   // date is accepted as yyyy-mm-dd String type
-  // Type can be either day, week, month, year 
+  // Type can be either "day", "week", "month", "year" 
   type = type.toLowerCase();
   const out = [];
 

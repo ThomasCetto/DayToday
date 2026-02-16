@@ -7,14 +7,18 @@ import { config } from "../config/config.js";
 
 
 export const createTask = async (req, res) => {
-    const neededParams = ['title', 'description', 'creation_date', 'date', 'gapAmount', 'gapType'];
+    const neededParams = ['title', 'description', 'date', 'gapAmount', 'gapType'];
     const paramError = checkFields(req.body, neededParams);
     if (paramError.length !== 0) {  // if some param is missing
         return res.status(400).json({ error: paramError });
     }
 
     req.body.gapType = req.body.gapType.toLowerCase();
-    const newTask = new Task({ ...req.body });
+    const taskData = {
+        ...req.body,
+        creation_date: new Date()
+    }
+    const newTask = new Task({ ...taskData });
     try {
         await newTask.save();
         await createInstances(req, newTask);
@@ -77,12 +81,16 @@ export const patchTask = async (req, res) => {
         return res.status(400).json({ error: "Invalid task ID" });
     }
     // Check if params are correct
-    const neededParams = ['title', 'description', 'creation_date', 'date', 'gapAmount', 'gapType'];
+    const neededParams = ['title', 'description', 'date', 'gapAmount', 'gapType'];
     const paramError = checkFields(req.body, neededParams);
     if (paramError.length !== 0) {  // if some param is missing
         return res.status(400).json({ error: paramError });
     }
     req.body.gapType = req.body.gapType.toLowerCase();
+    const taskData = {
+        ...req.body,
+        creation_date: new Date()
+    }
 
 
     try {
@@ -95,7 +103,7 @@ export const patchTask = async (req, res) => {
         await Task.findByIdAndDelete(id);
 
         // And create the new patched Task, and new instances
-        const newTask = new Task({ ...req.body });
+        const newTask = new Task({ ...taskData });
         await newTask.save();
 
         await createInstances(req, newTask);
