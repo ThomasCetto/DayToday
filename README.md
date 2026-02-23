@@ -10,5 +10,6 @@ npm run dev
 
 To run the frontend (at port 3000):
 ```
-npm start
+cd frontend
+npm run dev
 ```
