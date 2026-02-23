@@ -14,8 +14,8 @@ app.use(express.urlencoded({ extended: true }));
 
 connectDB();
 
-app.use("/tasks", taskRoutes);
-app.use("/taskInstances", taskInstanceRoutes);
+app.use("/api/tasks", taskRoutes);
+app.use("/api/taskInstances", taskInstanceRoutes);
 
 
 
