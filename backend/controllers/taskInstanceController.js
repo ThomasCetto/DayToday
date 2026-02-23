@@ -61,7 +61,6 @@ export const patchTaskInstance = async (req, res) => {
         const parsedDate = new Date(date);
         taskInstance.date = parsedDate;
         taskInstance.isCompleted = isCompleted;
-
         await taskInstance.save();
 
         res.status(200).json({ message: "TaskInstance updated", taskInstance });

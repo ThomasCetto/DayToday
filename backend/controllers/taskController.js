@@ -16,7 +16,7 @@ export const createTask = async (req, res) => {
     req.body.gapType = req.body.gapType.toLowerCase();
     const taskData = {
         ...req.body,
-        creation_date: new Date()
+        creationDate: new Date()
     }
     const newTask = new Task({ ...taskData });
     try {
@@ -75,7 +75,7 @@ export const deleteTask = async (req, res) => {
 
 export const patchTask = async (req, res) => {
     const { id } = req.params;
-    const { title, description, creation_date, date, gapAmount, gapType } = req.body;
+    const { title, description, creationDate, date, gapAmount, gapType } = req.body;
 
     if (!id || !id.match(/^[0-9a-fA-F]{24}$/)) {
         return res.status(400).json({ error: "Invalid task ID" });
@@ -89,7 +89,7 @@ export const patchTask = async (req, res) => {
     req.body.gapType = req.body.gapType.toLowerCase();
     const taskData = {
         ...req.body,
-        creation_date: new Date()
+        creationDate: new Date()
     }
 
 
