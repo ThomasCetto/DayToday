@@ -16,7 +16,8 @@ export const createTask = async (req, res) => {
     req.body.gapType = req.body.gapType.toLowerCase();
     const taskData = {
         ...req.body,
-        creationDate: new Date()
+        creationDate: new Date(),
+        isDeleted: false
     }
     const newTask = new Task({ ...taskData });
     try {
@@ -62,9 +63,9 @@ export const deleteTask = async (req, res) => {
         if (!task) {
             return res.status(404).json({ error: "Task not found" });
         }
-
-        await TaskInstance.deleteMany({ task: id });
-        await Task.findByIdAndDelete(id);
+        let today = new Date();
+        await TaskInstance.deleteMany({ task: id, date: { $gt: today }});
+        await Task.findByIdAndUpdate(id, {isDeleted: true});
 
         res.status(200).json({ message: "Task and related TaskInstances deleted successfully" });
     } catch (err) {
@@ -99,13 +100,13 @@ export const patchTask = async (req, res) => {
             return res.status(404).json({ error: "Task not found" });
         }
         // Delete old task and its instances
-        await TaskInstance.deleteMany({ task: id });
-        await Task.findByIdAndDelete(id);
+        let today = new Date();
+        await TaskInstance.deleteMany({ task: id, date: { $gt: today }});
+        await Task.findByIdAndUpdate(id, {isDeleted: true});
 
         // And create the new patched Task, and new instances
         const newTask = new Task({ ...taskData });
         await newTask.save();
-
         await createInstances(req, newTask);
 
         res.status(200).json({ message: "Task edited successfully", task: newTask });
@@ -118,12 +119,15 @@ export const patchTask = async (req, res) => {
 const createInstances = async (req, newTask) => {
     let datesList = timeGap(req.body.date, req.body.gapAmount, req.body.gapType);
     const instances = [];
+    let today = new Date();
     for (let i = 0; i < config.TASK_INSTANCE_COUNT; i++) {
-        instances.push({
-            task: newTask._id,
-            date: datesList[i],
-            isCompleted: false
-        });
+        if (datesList[i] >= today) {  // Doesn't add instances before current day
+            instances.push({
+                task: newTask._id,
+                date: datesList[i],
+                isCompleted: false
+            });
+        }
     }
     await TaskInstance.insertMany(instances);
 }
