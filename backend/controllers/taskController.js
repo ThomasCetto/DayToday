@@ -117,6 +117,14 @@ export const patchTask = async (req, res) => {
 };
 
 const createInstances = async (req, newTask) => {
+    if (req.body.gapAmount == 0 || req.body.gapType == 'none') {  // Just create 1
+        await TaskInstance.insertOne({
+            task: newTask._id,
+            date: req.body.date,
+            isCompleted: false
+        });
+        return;
+    }
     let datesList = timeGap(req.body.date, req.body.gapAmount, req.body.gapType);
     const instances = [];
     let today = new Date();

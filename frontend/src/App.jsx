@@ -19,32 +19,27 @@ function App() {
     console.log("Response body:", data);
   };
 
-
-
-
   return (
     <>
       <h1>Add task</h1>
       <form method='POST' onSubmit={handleSubmit}>
-        <input name='title' placeholder='Task title'/><br/>
-        <input name='description' placeholder='Task description'/><br/>
-        <input name='date' placeholder='date' type='date'/><br/>
-        <label>
-          <input type='checkbox' value="Yes" />
-          Repeat task
-        </label><br/>
-        
+        <label for='title'> Task title:</label><br/>
+        <input name='title' placeholder='Insert the title of the task'/><br/>
+        <label for='description'> Task description:</label><br/>
+        <input name='description' placeholder='Insert the description of the task'/><br/>
+        <label for='date'> Task date:</label><br/>
+        <input name='date' type='date'/><br/>
+        <label for='gapType'> Repeat:</label><br/>
         <select name='gapType'>
-          <option value='day' selected>Day</option>
-          <option value='week'>Week</option>
-          <option value='month'>Month</option>
-          <option value='year'>Year</option>
+          <option value='none'>Don't repeat</option>
+          <option value='day'>Every X days</option>
+          <option value='week'>Every X weeks</option>
+          <option value='month'>Every X months</option>
+          <option value='year'>Every X years</option>
         </select><br/>
-        <input name='gapAmount' placeholder='Every how much'/><br/>
+        <label for='gapAmount'>Choose X:</label><br/>
+        <input name='gapAmount' placeholder='Choose a value for X'/><br/><br/>
         <button type='submit'>Add task</button>
-
-
-        {/* <input type='submit'>Add task</input> */}
       </form>
   </>
   )
