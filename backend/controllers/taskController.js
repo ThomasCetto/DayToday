@@ -76,7 +76,6 @@ export const deleteTask = async (req, res) => {
 
 export const patchTask = async (req, res) => {
     const { id } = req.params;
-    const { title, description, creationDate, date, gapAmount, gapType } = req.body;
 
     if (!id || !id.match(/^[0-9a-fA-F]{24}$/)) {
         return res.status(400).json({ error: "Invalid task ID" });
