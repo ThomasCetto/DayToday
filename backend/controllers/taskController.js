@@ -16,6 +16,9 @@ export const createTask = async (req, res) => {
     if (!req.body.description) req.body.description = ' ';
 
     req.body.gapType = req.body.gapType.toLowerCase();
+    let dateMidday = new Date(req.body.date);
+    dateMidday.setHours(12);  // To avoid problems with daylight savings
+    req.body.date = dateMidday;
     const taskData = {
         ...req.body,
         creationDate: new Date(),
