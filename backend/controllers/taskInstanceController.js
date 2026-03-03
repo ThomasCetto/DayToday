@@ -85,7 +85,7 @@ export const getTasksFromRange = async (req, res) => {
     try{
         const entries = await TaskInstance.find({
             date: {
-                $gt: startUTC,
+                $gte: startUTC,
                 $lt: endUTC
             }
         });
@@ -101,7 +101,6 @@ export const getTasksFromRange = async (req, res) => {
             };
             output.push(fullTask);
         }
-        console.log(output)
         return res.status(200).json({'tasks': output});
 
     } catch (err) {

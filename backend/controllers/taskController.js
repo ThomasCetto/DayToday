@@ -7,11 +7,13 @@ import { config } from "../config/config.js";
 
 
 export const createTask = async (req, res) => {
-    const neededParams = ['title', 'description', 'date', 'gapAmount', 'gapType'];
+    const neededParams = ['title', 'date', 'gapType'];
     const paramError = checkFields(req.body, neededParams);
     if (paramError.length !== 0) {  // if some param is missing
         return res.status(400).json({ error: paramError });
     }
+    if (!req.body.gapAmount) req.body.gapAmount = 1;
+    if (!req.body.description) req.body.description = ' ';
 
     req.body.gapType = req.body.gapType.toLowerCase();
     const taskData = {
@@ -23,7 +25,6 @@ export const createTask = async (req, res) => {
     try {
         await newTask.save();
         await createInstances(req, newTask);
-
         res.status(200).json({ message: "task created" });
     } catch (error) {
         console.error(error);
@@ -81,17 +82,17 @@ export const patchTask = async (req, res) => {
         return res.status(400).json({ error: "Invalid task ID" });
     }
     // Check if params are correct
-    const neededParams = ['title', 'description', 'date', 'gapAmount', 'gapType'];
+    const neededParams = ['title', 'description', 'date', 'gapType'];
     const paramError = checkFields(req.body, neededParams);
     if (paramError.length !== 0) {  // if some param is missing
         return res.status(400).json({ error: paramError });
     }
+    req.body.gapAmount ??= 1;
     req.body.gapType = req.body.gapType.toLowerCase();
     const taskData = {
         ...req.body,
         creationDate: new Date()
     }
-
 
     try {
         const existingTask = await Task.findById(id);
