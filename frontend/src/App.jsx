@@ -1,48 +1,16 @@
 import './App.css'
+import CreateTaskForm from './components/CreateTaskForm'
+import DayTasksList from './components/DayTasksList'
 
 function App() {
-  const handleSubmit = async (e) => {
-    e.preventDefault(); // prevent reload
-    const formData = new FormData(e.target);
-    const payload = Object.fromEntries(formData.entries());
-    const response = await fetch("/api/tasks/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-    });
-
-    const data = await response.json();
-    console.log("Status:", response.status);
-    console.log("Success:", response.ok);
-    console.log("Response body:", data);
-  };
-
-  return (
-    <>
-      <h1>Add task</h1>
-      <form method='POST' onSubmit={handleSubmit}>
-        <label for='title'> Task title:</label><br/>
-        <input name='title' placeholder='Insert the title of the task'/><br/>
-        <label for='description'> Task description:</label><br/>
-        <input name='description' placeholder='Insert the description of the task'/><br/>
-        <label for='date'> Task date:</label><br/>
-        <input name='date' type='date'/><br/>
-        <label for='gapType'> Repeat:</label><br/>
-        <select name='gapType'>
-          <option value='none'>Don't repeat</option>
-          <option value='day'>Every X days</option>
-          <option value='week'>Every X weeks</option>
-          <option value='month'>Every X months</option>
-          <option value='year'>Every X years</option>
-        </select><br/>
-        <label for='gapAmount'>Choose X:</label><br/>
-        <input name='gapAmount' placeholder='Choose a value for X'/><br/><br/>
-        <button type='submit'>Add task</button>
-      </form>
-  </>
-  )
+    return (
+        <>
+        <DayTasksList></DayTasksList>
+        <CreateTaskForm></CreateTaskForm>
+        </>
+    );
 }
+
+
 
 export default App
