@@ -51,6 +51,8 @@ function DayTasksList() {
     return (
         <>
         <button onClick={setYesterday}>Go to yesterday</button>
+        <button onClick={() => {setDate(new Date())}}>Go to today</button>
+        
         <h1>Today's tasks</h1>
         <h3>({date.toISOString().slice(0, 10)})</h3>
         <ul>
