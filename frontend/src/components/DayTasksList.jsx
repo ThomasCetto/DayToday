@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import SingleTaskInfo from "./SingleTaskInfo";
+import "./DayTasksList.css";
+
 
 function DayTasksList() {
     const [tasks, setTasks] = useState([]);
@@ -35,34 +36,43 @@ function DayTasksList() {
     if(error) return <p>Error: {error}</p>;
 
     function setYesterday() {
-        let yesterday = new Date();
+        let yesterday = new Date(date);
         yesterday.setDate(date.getDate() - 1);
         setDate(yesterday);
     }
 
     function setTomorrow() {
-        let tomorrow = new Date();
+        let tomorrow = new Date(date);
         tomorrow.setDate(date.getDate() + 1);
         setDate(tomorrow);
     }
 
-
+    // const dayOfWeek = ["Domenica","Lunedì","Martedì","Mercoledì","Giovedì","Venerdì","Sabato"][date.getDay()];
+    // const month = ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"][date.getMonth()];
+    const dayOfMonth = date.getDate();
+    const dayOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"][date.getDay()];
+    const month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"][date.getMonth()];
+    
 
     return (
         <>
-        <button onClick={setYesterday}>Go to yesterday</button>
-        <button onClick={() => {setDate(new Date())}}>Go to today</button>
-        
-        <h1>Today's tasks</h1>
-        <h3>({date.toISOString().slice(0, 10)})</h3>
-        <ul>
-            {tasks.tasks.map(
-                task => (
-                    <li key={task._id}>{task.title}</li>
-                )
-            )}
-        </ul>
-        <button onClick={setTomorrow}>Go to tomorrow</button>
+            <div className="page">
+                <div className='side left' onClick={setYesterday}>←</div>
+                <div className="main">
+                    <h3>{dayOfWeek}, {dayOfMonth} {month}</h3>
+                    <input type="date" value={date.toISOString().slice(0, 10)} onChange={(e) => setDate(new Date(e.target.value))}></input>
+                    <ul>
+                        {tasks.tasks.map(
+                            task => (
+                                <li key={task._id}>{task.title}</li>
+                            )
+                        )}
+                    </ul>
+                </div>
+                <div className='side right' onClick={setTomorrow}>→</div>
+            </div>
+
+
         </>
     );
 }
