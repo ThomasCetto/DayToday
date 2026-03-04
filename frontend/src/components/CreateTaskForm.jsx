@@ -23,7 +23,7 @@ function CreateTaskForm() {
         <label htmlFor='description'> Task description:</label><br/>
         <input name='description' id='description' placeholder='Insert the description of the task'/><br/>
         <label htmlFor='date'> Task date:</label><br/>
-        <input name='date' id='date' type='date'/><br/>
+        <input name='date' id='date' type='date'value={new Date().toISOString().slice(0, 10)}/><br/>
         <label htmlFor='gapType'> Repeat:</label><br/>
         <select name='gapType' id='gapType'>
           <option value='none'>Don't repeat</option>
