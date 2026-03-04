@@ -8,7 +8,6 @@ function DayTasksList() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-
     useEffect(() => {
         // Fetch data when component loads
         const fetchTasks = async () => {
@@ -40,7 +39,6 @@ function DayTasksList() {
         yesterday.setDate(date.getDate() - 1);
         setDate(yesterday);
     }
-
     function setTomorrow() {
         let tomorrow = new Date(date);
         tomorrow.setDate(date.getDate() + 1);
@@ -53,14 +51,15 @@ function DayTasksList() {
     const dayOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"][date.getDay()];
     const month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"][date.getMonth()];
     
-
     return (
         <>
             <div className="page">
                 <div className='side left' onClick={setYesterday}>←</div>
                 <div className="main">
-                    <h3>{dayOfWeek}, {dayOfMonth} {month}</h3>
-                    <input type="date" value={date.toISOString().slice(0, 10)} onChange={(e) => setDate(new Date(e.target.value))}></input>
+                    <div className="mainHeader">
+                        <h3>{dayOfWeek}, {dayOfMonth} {month}</h3>
+                        <input type="date" id="datePicker" value={date.toISOString().slice(0, 10)} onChange={(e) => setDate(new Date(e.target.value))}></input>
+                    </div>
                     <ul>
                         {tasks.tasks.map(
                             task => (
@@ -71,8 +70,6 @@ function DayTasksList() {
                 </div>
                 <div className='side right' onClick={setTomorrow}>→</div>
             </div>
-
-
         </>
     );
 }

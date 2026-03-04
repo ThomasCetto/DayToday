@@ -1,10 +1,10 @@
 html, body {
   height:  100%;
   margin: 0;
-
+  overflow: hidden;
 }
 .page {
-  height: 100vh;
+  height: 100%;
   display: flex;
 }
 .side {
@@ -14,19 +14,30 @@ html, body {
     justify-content: center;
     cursor: pointer;
     font-size: 22px;
+    background: #2c2c2c;
 }
 .side:hover {
     background: rgb(74, 74, 74);
 }
-.left {
-    background: #2c2c2c;
-}
-.right {
-    background: #2c2c2c;
-}
 .main {
-    flex: 1;  /* Takes all remaining space */
+    flex: 1;  /* Takes all remaining horizontal space */
     background: #242424;
-}
+    overflow-y: auto;
+    min-height: 0;
 
+    scrollbar-width: none;       /* Hide scrollbar */
+	-ms-overflow-style: none;
+}
+.main::-webkit-scrollbar {
+	display: none;               /* Hide scrollbar */
+}
+.mainHeader {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+
+    background: #242424;     /* Cover background so that content doesn't show behind it */
+	padding-bottom: 20px;
+    padding-top: 1px;   /* For some reason it's needed to make the header not scroll */
+}
 

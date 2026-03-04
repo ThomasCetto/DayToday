@@ -19,13 +19,13 @@ function CreateTaskForm() {
       <h1>Add task</h1>
       <form method='POST' onSubmit={handleSubmit}>
         <label htmlFor='title'> Task title:</label><br/>
-        <input name='title' placeholder='Insert the title of the task'/><br/>
+        <input name='title' id='title' placeholder='Insert the title of the task'/><br/>
         <label htmlFor='description'> Task description:</label><br/>
-        <input name='description' placeholder='Insert the description of the task'/><br/>
+        <input name='description' id='description' placeholder='Insert the description of the task'/><br/>
         <label htmlFor='date'> Task date:</label><br/>
-        <input name='date' type='date'/><br/>
+        <input name='date' id='date' type='date'/><br/>
         <label htmlFor='gapType'> Repeat:</label><br/>
-        <select name='gapType'>
+        <select name='gapType' id='gapType'>
           <option value='none'>Don't repeat</option>
           <option value='day'>Every X days</option>
           <option value='week'>Every X weeks</option>
@@ -33,7 +33,7 @@ function CreateTaskForm() {
           <option value='year'>Every X years</option>
         </select><br/>
         <label htmlFor='gapAmount'>Choose X:</label><br/>
-        <input name='gapAmount' placeholder='Choose a value for X'/><br/><br/>
+        <input name='gapAmount' id='gapAmount' placeholder='Choose a value for X'/><br/><br/>
         <button type='submit'>Add task</button>
       </form>
   </>

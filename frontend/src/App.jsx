@@ -1,18 +1,16 @@
 import './App.css'
 import CreateTaskForm from './components/CreateTaskForm'
 import DayTasksList from './components/DayTasksList'
-import { Routes, Route, Link } from "react-router"
+import { Routes, Route, Link, Outlet } from "react-router"
+import AppLayout from './layouts/AppLayout';
 function App() {
     return (
 		<>
-			<nav>
-				<Link to="/">Home</Link>
-				<Link to="/add">Add task</Link>
-			</nav>
-
 			<Routes>
-				<Route path="/" element={<DayTasksList />} />
-				<Route path="/add" element={<CreateTaskForm />} />
+                <Route element={<AppLayout/>}>
+                    <Route path="/" element={<DayTasksList />} />
+                    <Route path="/add" element={<CreateTaskForm />} />
+                </Route>
 			</Routes>
 		</>
 	);

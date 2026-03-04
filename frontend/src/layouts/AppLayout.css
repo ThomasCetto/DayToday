@@ -1,0 +1,71 @@
+.layout {
+    display: grid;
+    height: 100vh;
+    overflow: hidden;
+
+    grid-template-columns: 220px 1fr;
+	grid-template-rows: 60px 1fr;
+	grid-template-areas:
+		"sidebar navbar"
+		"sidebar content";
+    transition: grid-template-columns 0.3s;
+}
+.content {
+	grid-area: content;
+	padding: 0px;
+	overflow-y: auto;
+}
+.rightSide {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+}
+.navbar {
+	grid-area: navbar;
+	display: flex;
+	align-items: center;
+	padding: 0 20px;
+	border-bottom: 1px solid #ffffff;
+    background: #212121;
+}
+.navbar {
+	grid-area: navbar;
+	display: flex;
+	align-items: center;
+	padding: 0 20px;
+	border-bottom: 1px solid #ddd;
+}
+.sidebar {
+	grid-area: sidebar;
+	border-right: 1px solid gray;
+	padding: 10px;
+    padding-top: 10px;
+    font-size: 20px;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+    align-items: stretch;
+}
+.sidebar a {
+    display: block;
+    padding: 10px 12px;
+    text-decoration: none;
+    color: #ffffff;
+    border-radius: 8px;
+}
+.sidebar a:hover {
+    background-color: #9c9c9c;
+}
+.toggleButton {
+    align-self: flex-end;
+    background: transparent;
+    border: none;
+    font-size: 30px;
+    cursor: pointer;
+}
+.layout.collapsed {
+	grid-template-columns: 60px 1fr;
+}
+.layout.collapsed .sidebarNav {
+	display: none;
+}
