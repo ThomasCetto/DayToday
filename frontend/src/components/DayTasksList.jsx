@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./DayTasksList.css";
+import TaskEntry from "./TaskEntry";
 
 
 function DayTasksList() {
@@ -63,7 +64,12 @@ function DayTasksList() {
                     <ul>
                         {tasks.tasks.map(
                             task => (
-                                <li key={task._id}>{task.title}</li>
+                                <TaskEntry 
+                                    key={task._id}
+                                    taskId={task._id} 
+                                    title={task.title} 
+                                    isCompleted={task.isCompleted} 
+                                />
                             )
                         )}
                     </ul>

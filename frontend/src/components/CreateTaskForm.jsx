@@ -23,7 +23,30 @@ function CreateTaskForm() {
         <label htmlFor='description'> Task description:</label><br/>
         <input name='description' id='description' placeholder='Insert the description of the task'/><br/>
         <label htmlFor='date'> Task date:</label><br/>
-        <input name='date' id='date' type='date'value={new Date().toISOString().slice(0, 10)}/><br/>
+        
+        {/* Date picker with buttons */}
+        <button type='button' onClick={() => {
+            let datePicker = document.getElementById("date");
+            let oldDate = datePicker.value;
+            let newDate = new Date(oldDate);
+            newDate.setHours(12);  // Prevents daylight savings problems
+            newDate.setDate(newDate.getDate() - 1);
+            datePicker.value = newDate.toISOString().slice(0, 10);
+          } 
+        }> &lt; </button>
+        <input name='date' id='date' type='date' defaultValue={new Date().toISOString().slice(0, 10)}/>
+        <button type='button' onClick={() => {
+            let datePicker = document.getElementById("date");
+            let oldDate = datePicker.value;
+            let newDate = new Date(oldDate);
+            newDate.setHours(12);  // Prevents daylight savings problems
+            newDate.setDate(newDate.getDate() + 1);
+            datePicker.value = newDate.toISOString().slice(0, 10);
+          } 
+        }> &gt; </button>
+        <br/>
+        {/* End date picker */}
+
         <label htmlFor='gapType'> Repeat:</label><br/>
         <select name='gapType' id='gapType'>
           <option value='none'>Don't repeat</option>
