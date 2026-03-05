@@ -7,11 +7,10 @@ function TaskEntry({ taskId, title, isCompleted }) {
     const didMount = useRef(false);
     
     useEffect(() => {
-        if (!didMount.current) {
+        if (!didMount.current) {  // No need to run it when mounting
             didMount.current = true;
             return;
         }
-
 
         const updateDB = async () => {
             try{
@@ -28,8 +27,6 @@ function TaskEntry({ taskId, title, isCompleted }) {
         };
         updateDB();
     }, [compl, taskId]);
-
-    
 
     return (
         <>

@@ -59,7 +59,16 @@ function DayTasksList() {
                 <div className="main">
                     <div className="mainHeader">
                         <h3>{dayOfWeek}, {dayOfMonth} {month}</h3>
-                        <input type="date" id="datePicker" value={date.toISOString().slice(0, 10)} onChange={(e) => setDate(new Date(e.target.value))}></input>
+                        <input 
+                            type="date" 
+                            id="datePicker" 
+                            value={date.toISOString().slice(0, 10)} 
+                            onChange={(e) => {
+                                if (e.target.value === "") return; 
+                                setDate(new Date(e.target.value));
+                            }} 
+                        />
+                        
                     </div>
                     <ul>
                         {tasks.tasks.map(
