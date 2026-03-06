@@ -36,8 +36,10 @@ html, body {
     top: 0;
     z-index: 10;
 
-    background: #242424;     /* Cover background so that content doesn't show behind it */
+    background: #242424;     /* Cover the background so that the task doesn't show behind it */
 	padding-bottom: 20px;
     padding-top: 1px;   /* For some reason it's needed to make the header not scroll */
 }
-
+li {
+    text-align: start;
+}

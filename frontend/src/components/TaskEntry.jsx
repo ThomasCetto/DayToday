@@ -1,5 +1,6 @@
 import { useRef } from "react";
 import { useEffect, useState } from "react"
+import FancyCheckbox from "./CustomCheckbox";
 
 
 function TaskEntry({ taskId, title, isCompleted }) {
@@ -30,14 +31,12 @@ function TaskEntry({ taskId, title, isCompleted }) {
 
     return (
         <>
-            <li> {title}
-                <input 
-                    type="checkbox" 
-                    checked={compl} 
-                    onChange={(e) => {
-                        setCompl(e.target.checked);
-                    }}
-                />   
+            <li className="task-entry">
+                <FancyCheckbox
+                    checked={compl}
+                    onChange={setCompl}
+                    label={title}
+                />
             </li>
             
         </>
