@@ -1,8 +1,21 @@
 import { GoogleLogin } from "@react-oauth/google";
+import { useNavigate } from "react-router";
 
 export default function GoogleSignInButton() {
+	const navigate = useNavigate();
+
 	return (
 		<GoogleLogin
+			type="standard"
+			theme="filled_blue"
+			size="large"
+			shape="rectangle"
+			text="signin"
+			logo_alignment="left"
+			width="199"
+			
+
+
 			onSuccess={async (credentialResponse) => {
 				const idToken = credentialResponse.credential;
 
@@ -14,19 +27,15 @@ export default function GoogleSignInButton() {
 					credentials: "include",
 					body: JSON.stringify({ idToken })
 				});
-
 				if (!res.ok) {
 					console.error("Google login failed");
 					return;
 				}
 
 				const data = await res.json();
-				console.log("Logged in:", data.user);
-				console.log("ALl data: ", data)
-
 				localStorage.setItem("token", data.token);  // Save JWT token if successful
 				localStorage.setItem("username", data.user.username);
-				window.location.reload()  // Reload so that the content of the pages updates for new user
+				navigate("/");
 			}}
 			onError={() => {
 				console.error("Google Login Failed");

@@ -4,6 +4,7 @@ import DayTasksList from './components/DayTasksList'
 import { Routes, Route, Link, Outlet } from "react-router"
 import AppLayout from './layouts/AppLayout';
 import GoogleSignInButton from './components/GoogleSignInButton';
+import Login from './components/Login';
 
 function App() {
     return (
@@ -12,6 +13,7 @@ function App() {
                 <Route element={<AppLayout/>}>
                     <Route path="/" element={<DayTasksList />} />
                     <Route path="/add" element={<CreateTaskForm />} />
+                    <Route path="/login" element={<Login />} />
                 </Route>
 			</Routes>
 		</>

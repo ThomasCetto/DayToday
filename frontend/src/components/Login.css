@@ -1,0 +1,10 @@
+.loginPage {
+	text-align: center;
+    color-scheme: light;   /* Used to remove white border around google's button */
+}
+
+.googleButton {
+    margin-top: 60px;
+	display: flex;
+	justify-content: center;
+}

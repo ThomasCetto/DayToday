@@ -9,7 +9,8 @@ export default function AppLayout() {
     const location = useLocation();
     const titles = {
 		"/": "Daily Tasks",
-		"/add": "Add Task"
+		"/add": "Add Task",
+        "/login": "Login"
 	};
     const title = titles[location.pathname] || "DayToday";
 
@@ -34,7 +35,10 @@ export default function AppLayout() {
             </header>
         
             <main className="content">
-                {(localStorage.username) ? <Outlet /> : <h2>You must be logged in to use this page</h2>}
+                {(localStorage.username || location.pathname === '/login') ? 
+                    <Outlet /> : 
+                    <h2>You must be logged in to use this page</h2>
+                }
             </main>
 		</div>
 	);
