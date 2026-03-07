@@ -8,7 +8,6 @@ import GoogleSignInButton from './components/GoogleSignInButton';
 function App() {
     return (
 		<>
-        <GoogleSignInButton />
 			<Routes>
                 <Route element={<AppLayout/>}>
                     <Route path="/" element={<DayTasksList />} />

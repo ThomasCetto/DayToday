@@ -1,6 +1,7 @@
 import { Link, Outlet, useLocation } from "react-router";
 import "./AppLayout.css";
 import { useState } from "react";
+import UserOnNavbar from "../components/UserOnNavbar";
 
 export default function AppLayout() {
     const [sidebarOpen, setSidebarOpen] = useState(true);
@@ -29,10 +30,11 @@ export default function AppLayout() {
 
             <header className="navbar">
                 <h1>{title}</h1>
+                <UserOnNavbar />
             </header>
         
             <main className="content">
-                <Outlet />
+                {(localStorage.username) ? <Outlet /> : <h2>You must be logged in to use this page</h2>}
             </main>
 		</div>
 	);

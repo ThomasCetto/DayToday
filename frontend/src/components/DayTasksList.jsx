@@ -20,7 +20,8 @@ function DayTasksList() {
                 const dateRangeString = date.toISOString().slice(0, 10) + '&to=' + nextDay;
                 const endpoint = 'api/taskInstances?from=' + dateRangeString;
                 const response = await apiFetch(endpoint, {method: "GET"});
-
+                
+                if(response.status == 401 || response.status == 403) throw new Error("You must be logged in to use this page");
                 if(!response.ok) throw new Error("Couldnt fetch tasks");
                 const data = await response.json();
                 setTasks(data);
@@ -47,8 +48,6 @@ function DayTasksList() {
         setDate(tomorrow);
     }
 
-    // const dayOfWeek = ["Domenica","Lunedì","Martedì","Mercoledì","Giovedì","Venerdì","Sabato"][date.getDay()];
-    // const month = ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"][date.getMonth()];
     const dayOfMonth = date.getDate();
     const dayOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"][date.getDay()];
     const month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"][date.getMonth()];

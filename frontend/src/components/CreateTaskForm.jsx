@@ -5,14 +5,13 @@ function CreateTaskForm() {
     e.preventDefault(); // prevent reload
     const formData = new FormData(e.target);
     const payload = Object.fromEntries(formData.entries());
-    const response = await apiFetch("/api/tasks", {
+    await apiFetch("/api/tasks", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(payload),
     });
-    console.log(response)
   };
 
   return (
