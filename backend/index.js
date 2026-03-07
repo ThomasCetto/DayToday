@@ -3,19 +3,26 @@ import cors from 'cors';
 import connectDB from "./config/db.js";
 import taskRoutes from "./routes/taskRoutes.js";
 import taskInstanceRoutes from "./routes/taskInstanceRoutes.js";
+import googleRoutes from "./routes/authRoutes.js";
+import userRoutes from "./routes/userRoutes.js";
+import cookieParser from 'cookie-parser';
+
+
 
 const app = express();
-
 
 // Middleware
 app.use(cors());
 app.use(json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser())
 
 connectDB();
 
 app.use("/api/tasks", taskRoutes);
 app.use("/api/taskInstances", taskInstanceRoutes);
+app.use("/api/users", userRoutes);
+app.use("/api/auth/google", googleRoutes);
 
 
 

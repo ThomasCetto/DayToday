@@ -77,15 +77,19 @@ export const getTasksFromRange = async (req, res) => {
     // Start and End get passed from the frontend directly in UTC format with complete timestamp
     const startUTC = params['from'];
     const endUTC = params['to'];
+    const userId = req.user.userId;
     try{
+        const userTasks = await Task.find({userId: userId});
+        const taskIds = userTasks.map(task => task._id);
         const entries = await TaskInstance.find({
             date: {
                 $gte: startUTC,
                 $lt: endUTC
-            }
+            },
+            task: { $in: taskIds }
         });
         let output = [];
-        for(let i=0; i<entries.length; i++) {
+        for (let i=0; i < entries.length; i++) {
             let entry = entries[i];
             let task = await Task.findById(entry['task']);
             let fullTask = {

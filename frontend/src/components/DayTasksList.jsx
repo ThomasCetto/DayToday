@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./DayTasksList.css";
 import TaskEntry from "./TaskEntry";
+import { apiFetch } from "../utils/wrappers";
 
 
 function DayTasksList() {
@@ -18,7 +19,7 @@ function DayTasksList() {
                 nextDay = nextDay.toISOString().slice(0, 10);
                 const dateRangeString = date.toISOString().slice(0, 10) + '&to=' + nextDay;
                 const endpoint = 'api/taskInstances?from=' + dateRangeString;
-                const response = await fetch(endpoint, {method: "GET"});
+                const response = await apiFetch(endpoint, {method: "GET"});
 
                 if(!response.ok) throw new Error("Couldnt fetch tasks");
                 const data = await response.json();

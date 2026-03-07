@@ -1,8 +1,11 @@
 import express from "express";
 import { patchTaskInstance, getTaskInstance, deleteTaskInstance, getTasksFromRange } from "../controllers/taskInstanceController.js";
+import { requireAuth } from "../middleware/requireAuth.js";
 
 
 const router = express.Router();
+
+router.use(requireAuth);  // Middleware for JWT
 
 router.get("/:id", getTaskInstance);
 router.delete("/:id", deleteTaskInstance);

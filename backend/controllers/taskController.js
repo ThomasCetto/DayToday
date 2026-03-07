@@ -19,10 +19,12 @@ export const createTask = async (req, res) => {
     let dateMidday = new Date(req.body.date);
     dateMidday.setHours(12);  // To avoid problems with daylight savings
     req.body.date = dateMidday;
+    const userId = req.user.userId;
     const taskData = {
         ...req.body,
         creationDate: new Date(),
-        isDeleted: false
+        isDeleted: false,
+        userId: userId
     }
     const newTask = new Task({ ...taskData });
     try {

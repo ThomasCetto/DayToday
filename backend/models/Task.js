@@ -8,7 +8,8 @@ const taskSchema = new Schema({
     date: { type: Date, required: true},
     gapAmount: { type: Number, required: true},
     gapType: { type: String, required: true},
-    isDeleted: { type: Boolean, required: true}
+    isDeleted: { type: Boolean, required: true},
+    userId: { type: String, required: true}
 });
 
 export const Task = mongoose.model("Task", taskSchema);

@@ -1,17 +1,18 @@
-
+import { apiFetch } from "../utils/wrappers";
 
 function CreateTaskForm() {
   const handleSubmit = async (e) => {
     e.preventDefault(); // prevent reload
     const formData = new FormData(e.target);
     const payload = Object.fromEntries(formData.entries());
-    await fetch("/api/tasks/", {
+    const response = await apiFetch("/api/tasks", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(payload),
     });
+    console.log(response)
   };
 
   return (
