@@ -36,7 +36,7 @@ function EditTaskRow({ id, title, description, date, gapType, gapAmount, complet
                             className="delete-button"
                             onClick={deleteTask}
                         />
-                        <span className="edit-task-title"><b>{title}</b></span>              	{/* Title */}
+                        <span className="edit-task-title"><b>{title}</b></span>         {/* Title */}
 
                         <div className="edit-task-date">                                {/* Date */}
                             First scheduled at: {date.slice(0, 10)}
