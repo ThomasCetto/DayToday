@@ -41,6 +41,7 @@ function EditTasksPage() {
                         key={task.task._id}
                         id={task.task._id}
                         title={task.task.title}
+                        description={task.task.description}
                         completedCount={task.completed}
                         totalCount={task.total}
                     />

@@ -5,7 +5,7 @@ import DeleteButton from "./DeleteButton";
 import { apiFetch } from "../utils/wrappers";
 
 
-function EditTaskRow({ id, title, completedCount, totalCount }) {
+function EditTaskRow({ id, title, description, completedCount, totalCount }) {
     const [deleted, setDeleted] = useState(false);
 
     const deleteTask = async () => {
@@ -38,9 +38,18 @@ function EditTaskRow({ id, title, completedCount, totalCount }) {
                         />
                         <span className="edit-task-title">
                             {title}   
-                        </span>
-                        <span>
-                            {completedCount}/{totalCount}
+                        </span> <br />
+                        
+                        {description !== " " ? 
+                            <span className="edit-task-description">
+                                {description}
+                                <br />
+                            </span>
+                             : 
+                            <></>
+                        }
+                        <span className="edit-task-count">
+                            Completed: {completedCount}/{totalCount}
                         </span>
                     </div>
                 }

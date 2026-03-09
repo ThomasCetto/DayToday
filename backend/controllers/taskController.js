@@ -151,11 +151,6 @@ const createInstances = async (req, newTask) => {
 //  Returns all Tasks that have linked not-yet-completed TaskInstances
 export const getOngoingTasks = async (req, res) => {
     try {
-        // const userId = req.user.userId;
-        // const ongoingInstances = await TaskInstance.find({isCompleted: false});
-        // const uniqueTaskIds = [...new Set(ongoingInstances.map(doc => doc.task.toString()))];
-        // const tasks = await Task.find({ userId: userId, _id: { $in: uniqueTaskIds }});
-
         const userId = req.user.userId;
         const endOfToday = new Date();
         endOfToday.setHours(23, 59, 59, 999);
