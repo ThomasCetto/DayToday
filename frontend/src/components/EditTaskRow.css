@@ -1,0 +1,12 @@
+.task-edit-row {
+    /* list-style: none; */
+    text-align: left;
+    font-size: 22px;
+}
+.task-edit-row:hover {
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+.edit-task-title {
+    margin-left: 15px;
+}

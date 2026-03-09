@@ -40,6 +40,3 @@ html, body {
 	padding-bottom: 20px;
     padding-top: 1px;   /* For some reason it's needed to make the header not scroll */
 }
-li {
-    text-align: start;
-}

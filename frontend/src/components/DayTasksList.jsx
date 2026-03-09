@@ -6,7 +6,7 @@ import { apiFetch } from "../utils/wrappers";
 
 function DayTasksList() {
     const [tasks, setTasks] = useState([]);
-    const [date, setDate] = useState(new Date());  // Today's date
+    const [date, setDate] = useState(new Date());  // Today's date as default
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 

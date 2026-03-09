@@ -51,12 +51,23 @@ export const patchTaskInstance = async (req, res) => {
         if (!taskInstance) {
             return res.status(404).json({ error: "TaskInstance not found" });
         }
+        
+        // Increment task completion count
+        // Using 2 ifs because there could be other cases, like when only the date gets updated.
+        if (!taskInstance.isCompleted && isCompleted) {  // Increment count
+            const task = await Task.findById(taskInstance.task);
+            task.completions += 1;
+            await task.save();
+        } else if (taskInstance.isCompleted && !isCompleted) {  // Decrement count
+            const task = await Task.findById(taskInstance.task);
+            task.completions -= 1;
+            await task.save();
+        }
 
         const parsedDate = date ? new Date(date) : taskInstance.date;
         taskInstance.date = parsedDate;
-        if (taskInstance !== undefined) {
-            taskInstance.isCompleted = isCompleted;
-        }
+        taskInstance.isCompleted = isCompleted;
+        
         await taskInstance.save();
 
         res.status(200).json({ message: "TaskInstance updated", taskInstance });

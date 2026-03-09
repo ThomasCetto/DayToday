@@ -69,8 +69,13 @@ export const deleteTask = async (req, res) => {
         if (!task) {
             return res.status(404).json({ error: "Task not found" });
         }
+        if (task.userId != req.user.userId) {
+            return res.status(403).json({ error: "You don't have the authorization to delete this task"})
+        }
+
         let today = new Date();
-        await TaskInstance.deleteMany({ task: id, date: { $gt: today }});
+        today.setHours(0,0,0,0);
+        await TaskInstance.deleteMany({ task: id });
         await Task.findByIdAndUpdate(id, {isDeleted: true});
 
         res.status(200).json({ message: "Task and related TaskInstances deleted successfully" });
@@ -122,6 +127,7 @@ export const patchTask = async (req, res) => {
 };
 
 const createInstances = async (req, newTask) => {
+    // Just a helper function, no need to check parameters
     if (req.body.gapAmount == 0 || req.body.gapType == 'none') {  // Just create 1
         await TaskInstance.insertOne({
             task: newTask._id,
@@ -132,16 +138,46 @@ const createInstances = async (req, newTask) => {
     }
     let datesList = timeGap(req.body.date, req.body.gapAmount, req.body.gapType);
     const instances = [];
-    let today = new Date();
     for (let i = 0; i < config.TASK_INSTANCE_COUNT; i++) {
-        if (datesList[i] >= today) {  // Doesn't add instances before current day
-            instances.push({
-                task: newTask._id,
-                date: datesList[i],
-                isCompleted: false
-            });
-        }
+        instances.push({
+            task: newTask._id,
+            date: datesList[i],
+            isCompleted: false
+        });
     }
     await TaskInstance.insertMany(instances);
 }
 
+//  Returns all Tasks that have linked not-yet-completed TaskInstances
+export const getOngoingTasks = async (req, res) => {
+    try {
+        // const userId = req.user.userId;
+        // const ongoingInstances = await TaskInstance.find({isCompleted: false});
+        // const uniqueTaskIds = [...new Set(ongoingInstances.map(doc => doc.task.toString()))];
+        // const tasks = await Task.find({ userId: userId, _id: { $in: uniqueTaskIds }});
+
+        const userId = req.user.userId;
+        const endOfToday = new Date();
+        endOfToday.setHours(23, 59, 59, 999);
+        const tasks = await Task.find({ userId, isDeleted: false });
+
+        const stats = await Promise.all(
+            tasks.map(async (task) => {
+                const total = await TaskInstance.countDocuments({ task: task._id, date: {$lt: endOfToday}});
+                const completed = await TaskInstance.countDocuments({
+                    task: task._id,
+                    isCompleted: true
+                });
+                return {
+                    task,
+                    total,
+                    completed
+                };
+            })
+        );
+        res.status(200).json({'tasks': stats});
+    } catch(err) {
+        console.log(err)
+        res.status(500).json({error: "Server error"});
+    }
+}

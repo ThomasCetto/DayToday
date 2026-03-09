@@ -4,7 +4,6 @@
     cursor: pointer;
     width: 100%;
 }
-
 .tooltip-text {
     visibility: hidden;
     background-color: rgb(32, 32, 32);
@@ -25,8 +24,16 @@
 
     z-index: 1500;
 }
-
 .tooltip-container:hover .tooltip-text {
     visibility: visible;
 }
+.task-entry {
+    list-style: none;
+}
+.task-entry:hover {
+    background: rgba(0,0,0,0.1);
+    border-radius: 10px;
+    padding-left: 20px;
+}
+
 

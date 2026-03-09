@@ -3,8 +3,8 @@ import CreateTaskForm from './components/CreateTaskForm'
 import DayTasksList from './components/DayTasksList'
 import { Routes, Route, Link, Outlet } from "react-router"
 import AppLayout from './layouts/AppLayout';
-import GoogleSignInButton from './components/GoogleSignInButton';
 import Login from './components/Login';
+import EditTasksPage from './pages/EditTasksPage';
 
 function App() {
     return (
@@ -14,16 +14,11 @@ function App() {
                     <Route path="/" element={<DayTasksList />} />
                     <Route path="/add" element={<CreateTaskForm />} />
                     <Route path="/login" element={<Login />} />
+                    <Route path="/edit" element={<EditTasksPage />} />
                 </Route>
 			</Routes>
 		</>
 	);
-    // return (
-    //     <>
-	// 		<h1>My Task App</h1>
-	// 		<GoogleSignInButton />
-    //     </>
-    // )
 }
 
 
