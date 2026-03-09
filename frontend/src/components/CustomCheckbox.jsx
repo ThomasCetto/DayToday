@@ -1,6 +1,6 @@
 import "./CustomCheckbox.css";
 
-function FancyCheckbox({ checked, onChange, label }) {
+function CustomCheckbox({ checked, onChange, label }) {
     return (
         <label className="checkbox">
             <input
@@ -14,4 +14,4 @@ function FancyCheckbox({ checked, onChange, label }) {
     );
 }
 
-export default FancyCheckbox;
+export default CustomCheckbox;

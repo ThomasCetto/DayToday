@@ -1,10 +1,11 @@
 import { useRef } from "react";
 import { useEffect, useState } from "react"
-import FancyCheckbox from "./CustomCheckbox";
+import CustomCheckbox from "./CustomCheckbox";
 import { apiFetch } from "../utils/wrappers";
+import "./TaskEntry.css";
 
 
-function TaskEntry({ taskId, title, isCompleted }) {
+function TaskEntry({ taskId, title, isCompleted, description }) {
     const [compl, setCompl] = useState(isCompleted);
     const didMount = useRef(false);
     
@@ -33,11 +34,15 @@ function TaskEntry({ taskId, title, isCompleted }) {
     return (
         <>
             <li className="task-entry">
-                <FancyCheckbox
-                    checked={compl}
-                    onChange={setCompl}
-                    label={title}
-                />
+                <div className="tooltip-container">
+                    <span className="tooltip-text">{description != " " ? description : "No description"}</span>
+                    
+                    <CustomCheckbox
+                        checked={compl}
+                        onChange={setCompl}
+                        label={title}
+                    />
+                </div>
             </li>
             
         </>

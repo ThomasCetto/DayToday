@@ -78,6 +78,7 @@ function DayTasksList() {
                                     taskId={task._id} 
                                     title={task.title} 
                                     isCompleted={task.isCompleted} 
+                                    description={task.description}
                                 />
                             )
                         )}

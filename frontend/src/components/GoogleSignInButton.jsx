@@ -12,9 +12,7 @@ export default function GoogleSignInButton() {
 			shape="rectangle"
 			text="signin"
 			logo_alignment="left"
-			width="199"
-			
-
+			width="199"  // From 200+ it displays more text in the button
 
 			onSuccess={async (credentialResponse) => {
 				const idToken = credentialResponse.credential;
@@ -35,7 +33,7 @@ export default function GoogleSignInButton() {
 				const data = await res.json();
 				localStorage.setItem("token", data.token);  // Save JWT token if successful
 				localStorage.setItem("username", data.user.username);
-				navigate("/");
+				navigate("/");  // Go to homepage
 			}}
 			onError={() => {
 				console.error("Google Login Failed");
