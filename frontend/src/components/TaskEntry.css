@@ -7,7 +7,8 @@
 
 .tooltip-text {
     visibility: hidden;
-    background-color: black;
+    background-color: rgb(32, 32, 32);
+    border: 1px solid white;
     color: white;
     padding: 6px 10px;
     border-radius: 6px;
@@ -17,10 +18,15 @@
     left: 50%;
     transform: translateX(-50%);
 
-    white-space: nowrap;
+    /* white-space: nowrap; */
+    max-width: 50%;
+    white-space: normal; 
+    word-wrap: break-word;
+
     z-index: 1500;
 }
 
 .tooltip-container:hover .tooltip-text {
     visibility: visible;
 }
+
