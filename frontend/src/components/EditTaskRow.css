@@ -4,17 +4,16 @@
     font-size: 22px;
     
     margin-bottom: 15px;
+    
 }
 .task-edit-row:hover {
     background: rgba(0, 0, 0, 0.1);
     border-radius: 10px;
 }
-.edit-task-title {
-    margin-left: 15px;
+.edit-task-title{
+    margin-left: 10px;
 }
-.edit-task-count {
+.edit-task-date, .edit-task-gap, .edit-task-description, .edit-task-count{
     margin-left: 50px;
-}
-.edit-task-description {
-    margin-left: 50px;
+    font-size: 16px;
 }

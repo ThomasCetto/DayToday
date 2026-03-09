@@ -42,6 +42,9 @@ function EditTasksPage() {
                         id={task.task._id}
                         title={task.task.title}
                         description={task.task.description}
+                        date={task.task.date}
+                        gapType={task.task.gapType}
+                        gapAmount={task.task.gapAmount}
                         completedCount={task.completed}
                         totalCount={task.total}
                     />

@@ -5,7 +5,7 @@ import DeleteButton from "./DeleteButton";
 import { apiFetch } from "../utils/wrappers";
 
 
-function EditTaskRow({ id, title, description, completedCount, totalCount }) {
+function EditTaskRow({ id, title, description, date, gapType, gapAmount, completedCount, totalCount }) {
     const [deleted, setDeleted] = useState(false);
 
     const deleteTask = async () => {
@@ -31,26 +31,35 @@ function EditTaskRow({ id, title, description, completedCount, totalCount }) {
                     :
 
                     // Normal row
-                    <div className="undeleted-task-row">
+                    <div className="undeleted-task-row">                               	{/* Delete button*/}
                         <DeleteButton
                             className="delete-button"
                             onClick={deleteTask}
                         />
-                        <span className="edit-task-title">
-                            {title}   
-                        </span> <br />
+                        <span className="edit-task-title"><b>{title}</b></span>              	{/* Title */}
+
+                        <div className="edit-task-date">                                {/* Date */}
+                            First scheduled at: {date.slice(0, 10)}
+                        </div>
                         
-                        {description !== " " ? 
-                            <span className="edit-task-description">
-                                {description}
-                                <br />
-                            </span>
-                             : 
-                            <></>
+                        <div className="edit-task-gap">                                 {/* Gap */}
+                            {
+                                (gapType !== "none" && gapAmount != 0) ?
+                                <span>Every {gapAmount} {gapType}s </span>
+                                :
+                                <span>One-time task</span>
+                            }
+                        </div> 
+                                                                             
+                        {                                                               
+                            (description !== " ") && 
+                            <div className="edit-task-description">                     {/* Description */}
+                                Description: {description}
+                            </div>
                         }
-                        <span className="edit-task-count">
-                            Completed: {completedCount}/{totalCount}
-                        </span>
+                        <div className="edit-task-count">
+                            Completed: {completedCount}/{totalCount}                    {/* Stats */}
+                        </div>
                     </div>
                 }
             </li>
