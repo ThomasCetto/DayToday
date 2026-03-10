@@ -70,7 +70,7 @@ function DayTasksList() {
                         />
                         
                     </div>
-                    <ul>
+                    <ul className="task-list">
                         {tasks.tasks.map(
                             task => (
                                 <TaskEntry 

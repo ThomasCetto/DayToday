@@ -33,7 +33,7 @@
 .task-entry:hover {
     background: rgba(0,0,0,0.1);
     border-radius: 10px;
-    padding-left: 20px;
+    /* padding-left: 6px; */
 }
 
 
