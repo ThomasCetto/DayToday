@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { useEffect, useState } from "react"
 import CustomCheckbox from "./CustomCheckbox";
-import { apiFetch } from "../utils/wrappers";
+import { apiFetch } from "../../utils/wrappers";
 import "./TaskEntry.css";
 
 

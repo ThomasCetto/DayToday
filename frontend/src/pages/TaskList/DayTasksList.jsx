@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./DayTasksList.css";
 import TaskEntry from "./TaskEntry";
-import { apiFetch } from "../utils/wrappers";
+import { apiFetch } from "../../utils/wrappers";
 
 
 function DayTasksList() {
