@@ -4,19 +4,27 @@ import DeleteButton from "./DeleteButton";
 import { apiFetch } from "../../utils/wrappers";
 import EditButton from "./EditButton";
 import EditTaskForm from "./EditTaskForm";
+import { useEffect } from "react";
 
 function EditTaskRow({
   id,
-  title,
-  description,
-  date,
-  gapType,
-  gapAmount,
+  titleProp,
+  descriptionProp,
+  dateProp,
+  gapTypeProp,
+  gapAmountProp,
   completedCount,
   totalCount,
 }) {
   const [deleted, setDeleted] = useState(false);
   const [editing, setEditing] = useState(false);
+
+  const [title, setTitle] = useState(titleProp);
+  const [description, setDescription] = useState(descriptionProp);
+  const [date, setDate] = useState(dateProp);
+  const [gapType, setGapType] = useState(gapTypeProp);
+  const [gapAmount, setGapAmount] = useState(gapAmountProp);
+
 
   const deleteTask = async () => {
     try {
@@ -77,19 +85,22 @@ function EditTaskRow({
         date={new Date(date)}
         gapType={gapType}
         gapAmount={gapAmount}
-        parentOnSubmit={() => setEditing(false)}
+        parentOnSubmit={(tit, desc, dat, gapTyp, gapAm) => {
+          setEditing(false);
+          setTitle(tit);
+          setDescription(desc);
+          setDate(dat);
+          setGapType(gapTyp);
+          setGapAmount(gapAm);
+        }}
       ></EditTaskForm>
     </>
   );
 
-  
-
   return (
     <>
       <li className="task-edit-row">
-        {
-          deleted ? deletedRow : ( editing ? editingRow : normalRow)
-        }
+        { deleted ? deletedRow : ( editing ? editingRow : normalRow) }
       </li>
     </>
   );

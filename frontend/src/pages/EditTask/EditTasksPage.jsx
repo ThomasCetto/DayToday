@@ -40,11 +40,11 @@ function EditTasksPage() {
           <EditTaskRow
             key={task.task._id}
             id={task.task._id}
-            title={task.task.title}
-            description={task.task.description}
-            date={task.task.date}
-            gapType={task.task.gapType}
-            gapAmount={task.task.gapAmount}
+            titleProp={task.task.title}
+            descriptionProp={task.task.description}
+            dateProp={task.task.date}
+            gapTypeProp={task.task.gapType}
+            gapAmountProp={task.task.gapAmount}
             completedCount={task.completed}
             totalCount={task.total}
           />
