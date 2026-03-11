@@ -85,9 +85,8 @@ export const deleteTask = async (req, res) => {
     }
 };
 
-export const patchTask = async (req, res) => {
+export const putTask = async (req, res) => {
     const { id } = req.params;
-
     if (!id || !id.match(/^[0-9a-fA-F]{24}$/)) {
         return res.status(400).json({ error: "Invalid task ID" });
     }
@@ -99,27 +98,23 @@ export const patchTask = async (req, res) => {
     }
     req.body.gapAmount ??= 1;
     req.body.gapType = req.body.gapType.toLowerCase();
-    const taskData = {
-        ...req.body,
-        creationDate: new Date()
-    }
 
     try {
-        const existingTask = await Task.findById(id);
-        if (!existingTask) {
+        const updatedTask = await Task.findByIdAndUpdate(
+            id,
+            req.body,
+            { returnDocument: "after" }  // returns the new document
+        );
+        if (!updatedTask) {
             return res.status(404).json({ error: "Task not found" });
         }
-        // Delete old task and its instances
-        let today = new Date();
-        await TaskInstance.deleteMany({ task: id, date: { $gt: today }});
-        await Task.findByIdAndUpdate(id, {isDeleted: true});
-
-        // And create the new patched Task, and new instances
-        const newTask = new Task({ ...taskData });
-        await newTask.save();
-        await createInstances(req, newTask);
-
-        res.status(200).json({ message: "Task edited successfully", task: newTask });
+        
+        // Delete future instances of the old task
+        let startOfToday = new Date();
+        startOfToday.setHours(0,0,0,0);
+        await TaskInstance.deleteMany({ task: id, date: { $gte: startOfToday }});
+        await createInstances(req, updatedTask);
+        res.status(200).json({ message: "Task edited successfully", task: updatedTask });
     } catch (err) {
         console.error(err);
         res.status(500).json({ error: "Server error" });
@@ -148,17 +143,16 @@ const createInstances = async (req, newTask) => {
     await TaskInstance.insertMany(instances);
 }
 
-//  Returns all Tasks that have linked not-yet-completed TaskInstances
+//  Returns all non-deleted Tasks
 export const getOngoingTasks = async (req, res) => {
     try {
         const userId = req.user.userId;
+        const tasks = await Task.find({ userId, isDeleted: false });
         const endOfToday = new Date();
         endOfToday.setHours(23, 59, 59, 999);
-        const tasks = await Task.find({ userId, isDeleted: false });
-
         const stats = await Promise.all(
             tasks.map(async (task) => {
-                const total = await TaskInstance.countDocuments({ task: task._id, date: {$lt: endOfToday}});
+                const total = await TaskInstance.countDocuments({ task: task._id, date: {$lte: endOfToday}});
                 const completed = await TaskInstance.countDocuments({
                     task: task._id,
                     isCompleted: true

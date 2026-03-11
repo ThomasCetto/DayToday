@@ -1,21 +1,29 @@
 import { useState } from "react";
 import { apiFetch } from "../../utils/wrappers";
-import "./CreateTaskForm.css";
+import './EditTaskForm.css';
 
-function CreateTaskForm() {
-  const [selectedGapType, setSelectedGapType] = useState('none');
+function EditTaskForm({id, title, description, date, gapType, gapAmount, parentOnSubmit }) {
+  const [selectedGapType, setSelectedGapType] = useState(gapType);
 
   const handleSubmit = async (e) => {
     e.preventDefault(); // prevent reload
     const formData = new FormData(e.target);
     const payload = Object.fromEntries(formData.entries());
-    await apiFetch("/api/tasks", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-    });
+    try {
+      console.log(JSON.stringify(payload));
+      const response = await apiFetch("/api/tasks/" + id, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
+      });
+      if (response.ok) {
+        parentOnSubmit();
+      }
+    } catch (error) {
+      console.error("Error while submitting task edits: ", error);
+    }
   };
 
   const createSkipDayButton = (offset, text) => { 
@@ -37,24 +45,23 @@ function CreateTaskForm() {
 
   return (
     <>
-      <h1>Add task</h1>
-      <form method='POST' onSubmit={handleSubmit}>
+      <form method='PUT' onSubmit={handleSubmit} className="edit-task-form">
         <label htmlFor='title'> Task title:</label><br/>
-        <input name='title' id='title'/><br/>
+        <input name='title' id='title' defaultValue={title}/><br/>
 
         <label htmlFor='description'> Task description:</label><br/>
-        <textarea name='description' id='description' className='large-text-field'/><br/>
+        <textarea type="textarea" name='description' id='description' defaultValue={description}/><br/>
 
         <label htmlFor='date'> Task date:</label><br/>
         {createSkipDayButton(-1, "<")}
-        <input name='date' id='date' type='date' defaultValue={new Date().toISOString().slice(0, 10)}/>
-        {createSkipDayButton(1, ">")}
-        <br/>
+        <input name='date' id='date' type='date' defaultValue={date.toISOString().slice(0, 10)}/>
+        {createSkipDayButton(1, ">")}<br/>
 
         <label htmlFor='gapType'> Repeat:</label><br/>
         <select 
           name='gapType' 
-          id='gapType'
+          id='gapType' 
+          defaultValue={gapType} 
           onChange={(e) => setSelectedGapType(e.target.value)}
         >
           <option value='none'>Don't repeat</option>
@@ -67,14 +74,15 @@ function CreateTaskForm() {
         {selectedGapType !== "none" && (
           <>
             <label htmlFor='gapAmount'>Choose X:</label><br/>
-            <input name='gapAmount' id='gapAmount' /><br/>
+            <input name='gapAmount' id='gapAmount' defaultValue={gapAmount} /><br/>
           </>
         )}
-
-        <button type='submit'>Create</button>
+        
+        <button type='submit'>Confirm edit</button> &nbsp;
+        <button type="button" onClick={(e) => e.target.form.reset()}> Reset </button>
       </form>
   </>
   )
 }
 
-export default CreateTaskForm;
+export default EditTaskForm;
