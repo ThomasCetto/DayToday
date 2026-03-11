@@ -68,7 +68,29 @@
 /* label text */
 .checkbox__label {
     user-select: none;
+    position: relative;
+
+    max-width: 90%;
+    white-space: normal; 
+    word-wrap: break-word;
 }
-/* .checkbox__label:hover {
-    margin-left: 10px;
-} */
+/* strike line */
+.checkbox__label::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 58%;
+    width: 0;
+    height: 0.1em;
+    background: currentColor;
+    transform: translateY(-50%);
+    color: #d6d6d6;
+}
+/* animate when checked */
+.checkbox input:checked ~ .checkbox__label::after {
+    width: 100%;
+    transition: width 400ms ease 0.4s;
+}
+.checkbox.checked {
+    color: #909090;
+}

@@ -2,7 +2,7 @@ import "./CustomCheckbox.css";
 
 function CustomCheckbox({ checked, onChange, label }) {
     return (
-        <label className="checkbox">
+        <label className={`checkbox ${checked ? "checked" : ""}`}>
             <input
                 type="checkbox"
                 checked={checked}
