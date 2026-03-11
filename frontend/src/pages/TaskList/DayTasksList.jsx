@@ -11,7 +11,7 @@ function DayTasksList() {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        // Fetch data when component loads
+        // Fetch data when component loads or when day changes
         const fetchTasks = async () => {
             try {
                 let nextDay = new Date(date);

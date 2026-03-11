@@ -1,7 +1,7 @@
 import { Link, Outlet, useLocation } from "react-router";
 import "./AppLayout.css";
 import { useState } from "react";
-import UserOnNavbar from "../components/UserOnNavbar";
+import UserOnNavbar from "./UserOnNavbar";
 
 export default function AppLayout() {
     const [sidebarOpen, setSidebarOpen] = useState(true);
