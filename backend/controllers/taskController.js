@@ -15,6 +15,8 @@ export const createTask = async (req, res) => {
     if (!req.body.gapAmount) req.body.gapAmount = 1;
     if (!req.body.description) req.body.description = ' ';
 
+    console.log("######: ", req)
+
     req.body.gapType = req.body.gapType.toLowerCase();
     let dateMidday = new Date(req.body.date);
     dateMidday.setHours(12);  // To avoid problems with daylight savings

@@ -11,7 +11,8 @@ export default function AppLayout() {
 		"/": "Daily Tasks",
 		"/add": "Add Task",
         "/login": "Login",
-        "/edit": "Edit Tasks"
+        "/edit": "Edit Tasks",
+        "/addWords": "Add new words",
 	};
     const title = titles[location.pathname] || "DayToday";
 
@@ -28,6 +29,7 @@ export default function AppLayout() {
 					<Link to="/">Today</Link>
 					<Link to="/add">Add task</Link>
                     <Link to="/edit">Edit tasks</Link>
+                    <Link to="/addWords">Add words</Link>
 				</nav>
 			</aside>
 

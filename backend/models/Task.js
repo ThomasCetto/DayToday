@@ -9,7 +9,7 @@ const taskSchema = new Schema({
     gapAmount: { type: Number, required: true},
     gapType: { type: String, required: true},
     isDeleted: { type: Boolean, required: true},
-    userId: { type: String, required: true},
+    userId: { type: String, required: true},    // TODO: put it as a ref
     completions: {type: Number, required: true, default: 0}
 });
 

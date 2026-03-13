@@ -4,7 +4,6 @@ import DeleteButton from "./DeleteButton";
 import { apiFetch } from "../../utils/wrappers";
 import EditButton from "./EditButton";
 import EditTaskForm from "./EditTaskForm";
-import { useEffect } from "react";
 
 function EditTaskRow({
   id,
