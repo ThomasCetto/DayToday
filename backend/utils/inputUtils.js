@@ -6,7 +6,7 @@ export function checkFields(params, parameterList) {
   }
 
   for (const field of parameterList) {
-    if (!params[field]) {
+    if (!(field in params)) {
       return `${field} is required`;
     }
   }
