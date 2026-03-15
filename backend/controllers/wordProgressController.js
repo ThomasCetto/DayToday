@@ -29,3 +29,77 @@ export const postWordProgress = async (req, res) => {
         res.status(500).json({message: "Error while saving the word progress"});
     }
 };
+
+// Returns all the words that the user is learning that have the date today / in the past and 
+// have 0 < level < 5, plus "goal" (default. 3, passed by frontend) of level 0 
+export const getTodaysWords = async (req, res) => {
+    const neededParams = ['goal'];
+    const paramError = checkFields(req.query, neededParams);
+    if (paramError.length !== 0) {  // if some param is missing
+        return res.status(400).json({ error: paramError });
+    }
+
+    let endOfToday = new Date();
+    endOfToday.setHours(23,59,59,999);
+
+    const userId = req.user.userId;
+    const goal = Number(req.query.goal);
+    try {
+        const toReview = await WordProgress.find({
+            userId: userId,
+            nextReview: { $lt: endOfToday },
+            level: { $gt: 0, $lt: 5}
+        }).populate('wordId', 'word');
+
+        const newWords = await WordProgress.find({
+            userId: userId, 
+            level: 0
+        })
+        .limit(req.query.goal)
+        .populate('wordId', 'word');
+        const toReviewStrings = toReview.map(wp => ({
+            word: wp.wordId.word,
+            wordId: wp.wordId._id
+        }));
+        const newWordsStrings = newWords.map(wp => ({
+            word: wp.wordId.word,
+            wordId: wp.wordId._id
+        }));
+
+        res.status(200).json({ toReview: toReviewStrings, newWords: newWordsStrings });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({error: "an error occured"});
+    }
+}
+
+export const patchWordProgress = async (req, res) => {
+    console.log(req.body)
+    const neededParams = [];
+    const paramError = checkFields(req.body, neededParams);
+    if (paramError.length !== 0) {  // if some param is missing
+        console.error(paramError)
+        return res.status(400).json({ error: paramError });
+    }
+
+    const newReview = new Date();
+    newReview.setDate(newReview.getDate() + req.body.offset);
+    
+    const userId = req.user.userId;
+    try {
+        await WordProgress.findOneAndUpdate(
+            {
+                userId: userId,
+                wordId: req.body.wordId
+            },
+            {
+                nextReview: newReview,
+                level: 1
+            }
+        );
+        res.status(200).json({message: "Updated review"});
+    } catch(error) {
+        console.error(error);
+        res.status(500).json({error: "Error in the server"});
+    }
+}

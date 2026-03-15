@@ -6,6 +6,7 @@ import AppLayout from './layouts/AppLayout';
 import LoginPage from './pages/Login/LoginPage';
 import EditTasksPage from './pages/EditTask/EditTasksPage';
 import AddWordsPage from './pages/AddWords/AddWordsPage';
+import LearnWordsPage from './pages/LearnWords/LearnWordsPage';
 
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
                     <Route path="/login" element={<LoginPage />} />
                     <Route path="/edit" element={<EditTasksPage />} />
                     <Route path="/addWords" element={<AddWordsPage />} />
+                    <Route path="/words" element={<LearnWordsPage />} />
                 </Route>
 			</Routes>
 		</>
