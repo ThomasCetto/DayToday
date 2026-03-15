@@ -3,7 +3,7 @@ const {Schema} = mongoose;
 
 const wordSchema = new Schema({
     word: { type: String, required: true },
-    verified: { type: String, default: false }
+    verified: { type: Boolean, default: false }
 });
 
 export const Word = mongoose.model("Word", wordSchema);

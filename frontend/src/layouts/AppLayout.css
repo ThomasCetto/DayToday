@@ -10,7 +10,7 @@
 		"sidebar content";
     transition: grid-template-columns 0.3s;
 }
-.content {
+.webpage-content {
 	grid-area: content;
 	padding: 0px;
 	overflow-y: auto;

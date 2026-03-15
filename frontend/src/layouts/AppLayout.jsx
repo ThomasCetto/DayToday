@@ -38,7 +38,7 @@ export default function AppLayout() {
                 <UserOnNavbar />
             </header>
         
-            <main className="content">
+            <main className="webpage-content">
                 {(localStorage.username || location.pathname === '/login') ? 
                     <Outlet /> : 
                     <h2>You must be logged in to use this page</h2>

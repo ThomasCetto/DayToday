@@ -1,0 +1,28 @@
+.meaning-navigation {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 14px;
+	margin-top: 18px;
+}
+
+.meaning-button {
+	background: #7c3aed;
+	color: white;
+	border: none;
+	padding: 8px 12px;
+	border-radius: 8px;
+	cursor: pointer;
+	font-weight: 600;
+	font-size: 10px;
+}
+
+.meaning-button:disabled {
+	opacity: 0.4;
+	cursor: not-allowed;
+}
+
+.meaning-counter {
+	color: #aaa;
+	font-size: 0.9rem;
+}

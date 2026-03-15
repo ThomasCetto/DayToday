@@ -1,12 +1,11 @@
 import express from "express";
-import { addWords, getSuggestions } from "../controllers/wordController.js";
+import { postWordProgress } from "../controllers/wordProgressController.js";
 import { requireAuth } from "../middleware/requireAuth.js";
 
 const router = express.Router();
 
 router.use(requireAuth);  // Middleware for JWT
 
-router.post("/", addWords);
-router.get("/suggestions", getSuggestions);
+router.post("/", postWordProgress);
 
 export default router;

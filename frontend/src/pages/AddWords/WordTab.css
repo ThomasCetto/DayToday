@@ -1,0 +1,142 @@
+.word-tab {
+    max-width: 720px;
+    margin: 32px auto;
+    padding: 28px;
+    background: linear-gradient(180deg, #1e1e24 0%, #18181d 100%);
+    border: 1px solid #2b2b34;
+    border-radius: 24px;
+    box-shadow: 0 16px 40px rgba(0,0,0,0.6);
+    color: #e6e6f0;
+}
+
+.word-tab__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.word-tab__title {
+    margin: 0;
+    font-size: clamp(2rem, 5vw, 3rem);
+    line-height: 1;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    color: #ffffff;
+}
+
+.word-tab__phonetic {
+    margin: 10px 0 0;
+    font-size: 1.05rem;
+    color: #b9a7ff;
+}
+
+.word-tab__play-button {
+    width: 64px;
+    height: 64px;
+    border: none;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #a78bfa 0%, #7c3aed 100%);
+    color: #ffffff;
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+    box-shadow: 0 10px 24px rgba(124, 58, 237, 0.5);
+    transition: transform 0.16s ease, box-shadow 0.16s ease, opacity 0.16s ease;
+}
+
+.word-tab__play-button:hover {
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 14px 28px rgba(124, 58, 237, 0.6);
+}
+
+.word-tab__play-button:active {
+    transform: scale(0.98);
+}
+
+.word-tab__play-button:focus-visible {
+    outline: 3px solid rgba(167, 139, 250, 0.4);
+    outline-offset: 4px;
+}
+
+.word-tab__play-icon {
+    font-size: 1.2rem;
+    margin-left: 3px;
+}
+
+.word-tab__badge {
+    display: inline-block;
+    padding: 8px 14px;
+    border-radius: 999px;
+    background: #2c2540;
+    color: #b9a7ff;
+    font-size: 0.95rem;
+    font-weight: 700;
+    text-transform: capitalize;
+    margin: 8px;
+}
+
+.word-tab__meanings-counter{
+    font-size: 14px;
+    color: rgb(190, 190, 190);
+}
+
+.word-tab__section {
+    margin-top: 28px;
+    padding-top: 20px;
+    border-top: 1px solid #2b2b34;
+}
+
+.word-tab__section-title {
+    margin: 0 0 14px;
+    font-size: 1rem;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: #a78bfa;
+}
+
+.word-tab__definitions {
+    margin: 0;
+    padding-left: 20px;
+}
+
+.word-tab__definition-item {
+    margin-bottom: 12px;
+    line-height: 1.7;
+    color: #d4d4e0;
+}
+
+.word-tab__synonyms {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.word-tab__synonym-pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 14px;
+    border-radius: 999px;
+    background: #252533;
+    border: 1px solid #35354a;
+    color: #c4b5fd;
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+@media (max-width: 640px) {
+    .word-tab {
+        padding: 20px;
+        border-radius: 18px;
+    }
+
+    .word-tab__header {
+        align-items: flex-start;
+    }
+
+    .word-tab__play-button {
+        width: 54px;
+        height: 54px;
+    }
+}

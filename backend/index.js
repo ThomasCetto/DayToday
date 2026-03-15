@@ -6,6 +6,7 @@ import taskInstanceRoutes from "./routes/taskInstanceRoutes.js";
 import googleRoutes from "./routes/authRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import wordRoutes from "./routes/wordRoutes.js";
+import wordProgressRoutes from "./routes/wordProgressRoutes.js";
 import cookieParser from 'cookie-parser';
 
 
@@ -25,6 +26,7 @@ app.use("/api/taskInstances", taskInstanceRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/auth/google", googleRoutes);
 app.use("/api/words", wordRoutes);
+app.use("/api/wordProgresses", wordProgressRoutes);
 
 
 

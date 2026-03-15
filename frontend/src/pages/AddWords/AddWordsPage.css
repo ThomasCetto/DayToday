@@ -1,0 +1,38 @@
+.toggle-insertion-container {
+	padding-top: 30px;
+	font-family: Arial, sans-serif;
+}
+
+.toggle-insertion {
+	display: inline-flex;
+	border: 1px solid #334155;
+	border-radius: 12px;
+	overflow: hidden;
+    background: #1e293b;
+}
+
+.toggle-button {
+	padding: 10px 20px;
+	border: none;
+	background: transparent;
+	color: #cbd5f5;
+	cursor: pointer;
+	font-size: 16px;
+	transition: all 0.2s ease;
+}
+
+.toggle-button:hover {
+	background: #334155;
+	color: #ffffff;
+}
+
+.toggle-button.active {
+	background: #6366f1;
+	color: white;
+	font-weight: 600;
+}
+
+.add-words__content {
+	margin-top: 20px;
+	width: 100%;
+}
