@@ -12,8 +12,8 @@ export default function AppLayout() {
 		"/add": "Add Task",
         "/login": "Login",
         "/edit": "Edit Tasks",
-        "/addWords": "Add new words",
-        "words": "Learn vocabulary"
+        "/addWords": "Add Words",
+        "/words": "Learn Words"
 	};
     const title = titles[location.pathname] || "DayToday";
 

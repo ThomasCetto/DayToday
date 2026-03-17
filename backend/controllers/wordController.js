@@ -76,3 +76,20 @@ export const getSuggestions = async (req, res) => {
     }
 
 };
+
+export const deleteWord = async (req, res) => {
+    const { wordId } = req.params;
+    if (!wordId || !wordId.match(/^[0-9a-fA-F]{24}$/)) {
+        return res.status(400).json({ error: "Invalid Word ID" });
+    }
+
+    try {
+        // TODO: check if the word actually does not have a definition
+        await WordProgress.deleteMany({"wordId": wordId});
+        await Word.findByIdAndDelete(wordId);
+        res.status(200).json({ message: "Word deleted successfully" });
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).json({ error: "Word deletion was not successful" });
+    }
+}

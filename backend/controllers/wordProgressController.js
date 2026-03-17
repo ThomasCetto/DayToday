@@ -59,11 +59,13 @@ export const getTodaysWords = async (req, res) => {
         .populate('wordId', 'word');
         const toReviewStrings = toReview.map(wp => ({
             word: wp.wordId.word,
-            wordId: wp.wordId._id
+            wordId: wp.wordId._id,
+            level: wp.level
         }));
         const newWordsStrings = newWords.map(wp => ({
             word: wp.wordId.word,
-            wordId: wp.wordId._id
+            wordId: wp.wordId._id,
+            level: wp.level
         }));
 
         res.status(200).json({ toReview: toReviewStrings, newWords: newWordsStrings });
@@ -82,6 +84,11 @@ export const patchWordProgress = async (req, res) => {
         return res.status(400).json({ error: paramError });
     }
 
+    const offset = req.body.offset;
+    if (offset === -1) {
+        console.log("word learned");
+
+    }
     const newReview = new Date();
     newReview.setDate(newReview.getDate() + req.body.offset);
     
@@ -94,7 +101,7 @@ export const patchWordProgress = async (req, res) => {
             },
             {
                 nextReview: newReview,
-                level: 1
+                level: (offset === -1) ? 5 : 1 
             }
         );
         res.status(200).json({message: "Updated review"});

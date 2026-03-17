@@ -22,7 +22,7 @@ function SuggestWords() {
                 const response = await apiFetch(endpoint, { method: "GET" });
 
                 if (response.status == 401 || response.status == 403)
-                throw new Error("You must be logged in to use this page");
+                    throw new Error("You must be logged in to use this page");
                 if (!response.ok) throw new Error("Couldnt fetch words");
                 const data = await response.json();
                 setSuggestions(data.words);
@@ -61,6 +61,11 @@ function SuggestWords() {
         fetchDefinition();
     }, [suggestions]);
 
+    const deleteMissingWord = async () => {
+        const endpoint = "/api/words/" + suggestions.at(-1).wordId;
+        await apiFetch(endpoint, {method: "DELETE"});
+        setSuggestions(suggestions.slice(0, -1));
+    }
 
     if (loading1 || loading2) return <p>Loading...</p>;
     if (error) return <p>Error: {error}</p>;
@@ -74,12 +79,18 @@ function SuggestWords() {
                     <h1>There are no suggestions left, try later</h1>
                 )}
 
-
-                
                 { suggestions.length > 0 && ( 
                     <>
                         { wordData == null && (
-                            <h1>It looks like the word "{suggestions.at(-1).word}" was not found</h1>
+                            <>
+                                <h1>It looks like the word "{suggestions.at(-1).word}" was not found</h1>
+                                <button
+                                    className="suggest-words__delete-button"
+                                    onClick={deleteMissingWord}
+                                >
+                                    Remove from collection
+                                </button>
+                            </>
                         )}
 
                         { wordData != null && (

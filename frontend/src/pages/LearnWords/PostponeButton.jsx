@@ -1,14 +1,12 @@
 function PostponeButton({ numberOfDays, onClick }) {
-    
-
-
-    
+    const buttonText = (numberOfDays == -1) ? "Learned" : numberOfDays + " days";
     return (
         <>
-            <button
+            <button 
+                className="postpone-button__button"
                 onClick={() => onClick(numberOfDays)}
             >
-                Postpone {numberOfDays} 
+                {buttonText}
             </button>
         </>
     )

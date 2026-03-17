@@ -2,29 +2,76 @@ import { useEffect, useState } from "react";
 import "./LearnWordsPage.css";
 import { apiFetch }  from "../../utils/wrappers.js";
 import PostponeButton from "./PostponeButton.jsx";
+import MeaningsBrowser from "../AddWords/MeaningsBrowser.jsx";
+import HiddenCard from "./HiddenCard.jsx";
 
 function LearnWordsPage() {
     const [words, setWords] = useState([]);
+    const [definition, setDefinition] = useState(null);
+    const [isRevealed, setIsReavealed] = useState(false);
+    const [noWordsAvailable, setNoWordsAvailable] = useState(false);
+    const [loading1, setLoading1] = useState(true);
+    const [loading2, setLoading2] = useState(true);
+    const [error, setError] = useState(null);
 
 
     useEffect(() => {
         const fetchWords = async () => {
-            const endpoint = "/api/wordProgresses?goal=3"; // TODO: get goal from user profile
-            const response = await apiFetch(endpoint, { method: "GET" });
-            const data = await response.json();
+            try {
+                const endpoint = "/api/wordProgresses?goal=50"; // TODO: get goal from user profile
+                const response = await apiFetch(endpoint, { method: "GET" });
+                const data = await response.json();
+                const totalWords = data.newWords.concat(data.toReview);
+                if (totalWords.length == 0) {
+                    setNoWordsAvailable(true);
+                }
 
-            console.log("toReview: ", data.toReview)
-
-            setWords(data.newWords.concat(data.toReview));
+                setWords(totalWords);
+            } catch (err) {
+                setError(err.message);
+            } finally {
+                setLoading1(false);
+            }
         }
 
-        fetchWords();
-    }, []);
+        if (words.length === 0 && !noWordsAvailable) {
+            fetchWords();
+        }
+    }, [words, noWordsAvailable]);
+
+    useEffect(() => {
+        if (words.length === 0) {
+            setLoading2(false);
+            return;
+        }
+
+        const fetchDefinition = async () => {
+            try {
+                setLoading2(true);
+                const currentWord = words.at(-1).word;
+                const dictionary_api = "https://api.dictionaryapi.dev/api/v2/entries/en/";
+                const response = await fetch(dictionary_api + currentWord, {method: "GET"});
+                
+                let data = await response.json();
+                if (data && Array.isArray(data)) {   // if the definition does not exist TODO add skip button
+                    data[0].meanings.sort((a, b) => {
+                        return (b.definitions?.length ?? 0) - (a.definitions?.length ?? 0);
+                    });
+                }
+                setDefinition(data[0]);
+            } catch (err) {
+                setError("Error while fetching suggestions: ", err.message);
+            } finally {
+                setLoading2(false);
+            }
+        }
+
+        fetchDefinition();
+    }, [words]);
 
     const postponeWord = async (numberOfDays) => {
-        console.log("Postponign in the funciton of " + numberOfDays);
         const endpoint = "/api/wordProgresses/";
-        const response = await apiFetch(endpoint, {
+        await apiFetch(endpoint, {
             method: "PATCH",
             body: JSON.stringify({
                 offset: numberOfDays,
@@ -36,29 +83,72 @@ function LearnWordsPage() {
         });
 
         setWords(words.slice(0, -1));
-
-        console.log("Postpone response: ", response);
+        setIsReavealed(false);
     };
 
-    console.log("Words: ", words)
+    const deleteMissingWord = async () => {
+        const endpoint = "/api/words/" + words.at(-1).wordId;
+        await apiFetch(endpoint, {method: "DELETE"});
+        setWords(words.slice(0, -1));
+        setIsReavealed(false);
+    }
 
+
+    if (error) return <p>Error: {error}</p>;
+    if (loading1 || loading2) return <p>Loading...</p>;
+
+    if (words.length === 0) {
+        return (<h2 className="learn-words-page__completion-title">You have completed all the words for today! <br /><br />If you want to learn more, please add them in the "Add words" page</h2>);
+    } else if (definition == null) {
+        return (
+            <>
+                <h1>It looks like the definition of the word "{words.at(-1).word}" was not found</h1>
+                <button
+                    className="learn-words-page__delete-button"
+                    onClick={deleteMissingWord}
+                >
+                    Remove from collection
+                </button>
+            </>
+        );
+    } else if (!isRevealed) {
+        return (
+            <HiddenCard 
+                capitalizedWord={words.at(-1).word}
+                onClickReveal={() => setIsReavealed(true)}
+                isNewWord={words.at(-1).level <= 0}
+            />
+        );
+    }
+    
+
+    
+    // Words.length > 0 and definition != null and isRevealed == true 
+    const audioApiEndpoint = "https://api.dictionaryapi.dev/media/pronunciations/en/";
     return (
-        <>
-            <h1>Learn words</h1>
-            { words.length === 0 && (
-                <h2>There are no more words to learn today</h2>
-            )}
+        <>  
+            <div className="learn-words-page__content">
+                <MeaningsBrowser 
+                    meanings={definition.meanings}
+                    capitalizedWord={definition.word.charAt(0).toUpperCase() + definition.word.slice(1)}
+                    phonetic={definition.phonetic}
+                    audioUrl={audioApiEndpoint + definition.word + "-us.mp3"}
+                    fallbackAudioUrl={audioApiEndpoint + definition.word + "-uk.mp3"}
+                />
 
-            { words.length > 0 && (
-                <>
-                    <h3>{words.at(-1).word}</h3>
+                {/* <PostponeButton numberOfDays={1} onClick={postponeWord} />
+                <PostponeButton numberOfDays={3} onClick={postponeWord} />
+                <PostponeButton numberOfDays={5} onClick={postponeWord} />
+                <PostponeButton numberOfDays={-1} onClick={postponeWord} /> */}
+
+
+                <div className="learn-words-page__review-actions">
                     <PostponeButton numberOfDays={1} onClick={postponeWord} />
                     <PostponeButton numberOfDays={3} onClick={postponeWord} />
                     <PostponeButton numberOfDays={5} onClick={postponeWord} />
-                </>
-            )}
-            
-            
+                    <PostponeButton numberOfDays={-1} onClick={postponeWord} />
+                </div>
+            </div>
             
         </>
     );
