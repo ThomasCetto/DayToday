@@ -32,7 +32,7 @@ function ManualAddWords() {
                 <textarea
                     name="words"
                     id="words-field"
-                    placeholder="genuflect, gutter, holster, ..."
+                    placeholder="genuflect, ripple, holster, ..."
                 />
                 <br />
                 <div className="tooltip-manual"> i

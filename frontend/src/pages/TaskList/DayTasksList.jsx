@@ -55,10 +55,11 @@ function DayTasksList() {
     return (
         <>
             <div className="page">
-                <div className='side left' onClick={setYesterday}>←</div>
+                {/* <div className='side left' onClick={setYesterday}>←</div> */}
                 <div className="main">
                     <div className="mainHeader">
                         <h3>{dayOfWeek}, {dayOfMonth} {month}</h3>
+                        <span className='change-day-button' onClick={setYesterday}>←</span>
                         <input 
                             type="date" 
                             id="datePicker" 
@@ -67,7 +68,11 @@ function DayTasksList() {
                                 if (e.target.value === "") return; 
                                 setDate(new Date(e.target.value));
                             }} 
+                            onClick={(e) => {
+                                e.currentTarget.showPicker();
+                            }}
                         />
+                        <span className='change-day-button' onClick={setTomorrow}>→</span>
                         
                     </div>
                     <ul className="task-list">
@@ -84,7 +89,7 @@ function DayTasksList() {
                         )}
                     </ul>
                 </div>
-                <div className='side right' onClick={setTomorrow}>→</div>
+                {/* <div className='side right' onClick={setTomorrow}>→</div> */}
             </div>
         </>
     );
