@@ -98,7 +98,7 @@ function EditTaskRow({
 
   return (
     <>
-      <li className="task-edit-row">
+      <li className={"task-edit-row " + (editing ? "editing" : "")}>
         { deleted ? deletedRow : ( editing ? editingRow : normalRow) }
       </li>
     </>

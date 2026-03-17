@@ -55,7 +55,6 @@ function DayTasksList() {
     return (
         <>
             <div className="page">
-                {/* <div className='side left' onClick={setYesterday}>←</div> */}
                 <div className="main">
                     <div className="mainHeader">
                         <h3>{dayOfWeek}, {dayOfMonth} {month}</h3>
@@ -89,7 +88,6 @@ function DayTasksList() {
                         )}
                     </ul>
                 </div>
-                {/* <div className='side right' onClick={setTomorrow}>→</div> */}
             </div>
         </>
     );

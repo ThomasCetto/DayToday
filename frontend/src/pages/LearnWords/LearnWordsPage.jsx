@@ -4,6 +4,7 @@ import { apiFetch }  from "../../utils/wrappers.js";
 import PostponeButton from "./PostponeButton.jsx";
 import MeaningsBrowser from "../AddWords/MeaningsBrowser.jsx";
 import HiddenCard from "./HiddenCard.jsx";
+import { Link } from "react-router";
 
 function LearnWordsPage() {
     const [words, setWords] = useState([]);
@@ -53,7 +54,7 @@ function LearnWordsPage() {
                 const response = await fetch(dictionary_api + currentWord, {method: "GET"});
                 
                 let data = await response.json();
-                if (data && Array.isArray(data)) {   // if the definition does not exist TODO add skip button
+                if (data && Array.isArray(data)) {   // if the definition does not exist
                     data[0].meanings.sort((a, b) => {
                         return (b.definitions?.length ?? 0) - (a.definitions?.length ?? 0);
                     });
@@ -98,7 +99,14 @@ function LearnWordsPage() {
     if (loading1 || loading2) return <p>Loading...</p>;
 
     if (words.length === 0) {
-        return (<h2 className="learn-words-page__completion-title">You have completed all the words for today! <br /><br />If you want to learn more, please add them in the "Add words" page</h2>);
+        return (
+            <>
+                <h2 className="learn-words-page__completion-title">You have completed all the words for today!</h2><br/><br/><br/>
+                <Link to="/addWords" className="learn-words-page__nav-link-button">
+                    Go add new ones
+                </Link>
+            </>
+        );
     } else if (definition == null) {
         return (
             <>
@@ -136,16 +144,15 @@ function LearnWordsPage() {
                     fallbackAudioUrl={audioApiEndpoint + definition.word + "-uk.mp3"}
                 />
 
-                {/* <PostponeButton numberOfDays={1} onClick={postponeWord} />
-                <PostponeButton numberOfDays={3} onClick={postponeWord} />
-                <PostponeButton numberOfDays={5} onClick={postponeWord} />
-                <PostponeButton numberOfDays={-1} onClick={postponeWord} /> */}
-
 
                 <div className="learn-words-page__review-actions">
                     <PostponeButton numberOfDays={1} onClick={postponeWord} />
+                    <PostponeButton numberOfDays={2} onClick={postponeWord} />
                     <PostponeButton numberOfDays={3} onClick={postponeWord} />
                     <PostponeButton numberOfDays={5} onClick={postponeWord} />
+                    <PostponeButton numberOfDays={7} onClick={postponeWord} />
+                    <PostponeButton numberOfDays={14} onClick={postponeWord} />
+                    <PostponeButton numberOfDays={30} onClick={postponeWord} />
                     <PostponeButton numberOfDays={-1} onClick={postponeWord} />
                 </div>
             </div>
