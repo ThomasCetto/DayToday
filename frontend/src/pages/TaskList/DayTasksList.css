@@ -4,8 +4,17 @@ html, body {
   overflow: hidden;
 }
 .page {
-  height: 100%;
-  display: flex;
+    height: 100%;
+    display: flex;
+    background:
+    linear-gradient(to right,
+        rgba(124, 58, 237, 0.18),
+        rgba(124, 58, 237, 0.05) 60px,
+        transparent 120px,
+        transparent calc(100% - 120px),
+        rgba(124, 58, 237, 0.05) calc(100% - 60px),
+        rgba(124, 58, 237, 0.18)
+    );
 }
 .side {
     width: 80px;
@@ -14,14 +23,15 @@ html, body {
     justify-content: center;
     cursor: pointer;
     font-size: 22px;
-    background: #2c2c2c;
+    /* background: #2c2c2c; */
 }
 .side:hover {
-    background: rgb(74, 74, 74);
+    /* background: rgb(74, 74, 74); */
+    background: rgba(124, 58, 237, 0.04);
 }
 .main {
     flex: 1;  /* Takes all remaining horizontal space */
-    background: #242424;
+    /* background: #242424; */
     overflow-y: auto;
     min-height: 0;
 
@@ -36,7 +46,7 @@ html, body {
     top: 0;
     z-index: 10;
 
-    background: #242424;     /* Cover the background so that the task doesn't show behind it */
+    /* background: #242424;     Cover the background so that the task doesn't show behind it */
 	padding-bottom: 20px;
     padding-top: 1px;   /* For some reason it's needed to make the header not scroll */
 }
