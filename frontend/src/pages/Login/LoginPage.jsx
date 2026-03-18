@@ -1,5 +1,5 @@
 import GoogleSignInButton from "./GoogleSignInButton";
-import "./Login.css";
+import "./LoginPage.css";
 
 export default function LoginPage() {
   return (

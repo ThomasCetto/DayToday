@@ -63,3 +63,9 @@
 .layout.collapsed .sidebarNav {
 	display: none;
 }
+.auth-layout-container {
+	display: none; 
+}
+.auth-layout-container.visible {
+	display: block;
+}
