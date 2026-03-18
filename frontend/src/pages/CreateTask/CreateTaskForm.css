@@ -1,0 +1,132 @@
+.create-task-form {
+	max-width: 720px;
+	margin: 32px auto;
+	padding: 28px;
+	display: flex;
+	flex-direction: column;
+	gap: 14px;
+
+	background: linear-gradient(180deg, #1e1e24 0%, #18181d 100%);
+	border: 1px solid #2b2b34;
+	border-radius: 24px;
+	box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
+	color: #e6e6f0;
+}
+
+.create-task-form label {
+	font-size: 0.95rem;
+	font-weight: 600;
+	color: #ffffff;
+	margin-bottom: -8px;
+}
+
+.create-task-form input,
+.create-task-form textarea,
+.create-task-form select {
+	width: 100%;
+	box-sizing: border-box;
+	padding: 12px 14px;
+	border: 1px solid #2b2b34;
+	border-radius: 14px;
+	background: #111118;
+	color: #e6e6f0;
+	font-size: 1rem;
+	outline: none;
+	transition: border-color 0.16s ease, box-shadow 0.16s ease, transform 0.16s ease;
+}
+
+.create-task-form select {
+    width: fit-content;
+	min-width: 160px;
+    align-self: center;
+}
+
+.create-task-form input::placeholder,
+.create-task-form textarea::placeholder {
+	color: #9b9bb0;
+}
+
+.create-task-form input:focus,
+.create-task-form textarea:focus,
+.create-task-form select:focus {
+	border-color: #7c3aed;
+	box-shadow: 0 0 0 3px rgba(167, 139, 250, 0.18);
+}
+
+.create-task-form textarea.large-text-field {
+	min-height: 140px;
+	resize: vertical;
+}
+
+.create-task-form input[type="date"] {
+	max-width: 220px;
+}
+
+.create-task-form button {
+	padding: 12px 24px;
+	border: none;
+	border-radius: 999px;
+	background: linear-gradient(135deg, #a78bfa 0%, #7c3aed 100%);
+	color: #ffffff;
+	font-size: 1rem;
+	font-weight: 700;
+	cursor: pointer;
+	box-shadow: 0 10px 24px rgba(124, 58, 237, 0.5);
+	transition: transform 0.16s ease, box-shadow 0.16s ease, opacity 0.16s ease;
+}
+
+.create-task-form button:hover {
+	transform: translateY(-2px) scale(1.02);
+	box-shadow: 0 14px 28px rgba(124, 58, 237, 0.6);
+}
+
+.create-task-form button:active {
+	transform: scale(0.98);
+}
+
+.create-task-form button:focus-visible {
+	outline: 3px solid rgba(167, 139, 250, 0.4);
+	outline-offset: 4px;
+}
+
+/* Style the little < and > date buttons differently from submit */
+.create-task-form button[type="button"] {
+	padding: 10px 14px;
+	min-width: 42px; 
+	margin: 0 8px 0 0;
+	border-radius: 12px;
+	font-size: 1rem;
+	line-height: 1;
+}
+
+.create-task-form button[type="submit"] {
+	margin-top: 16px;
+	align-self: center;
+}
+
+
+/* Optional heading styling */
+/* h1 {
+	margin: 0 0 20px;
+	text-align: center;
+	font-size: clamp(2rem, 5vw, 3rem);
+	line-height: 1;
+	font-weight: 800;
+	letter-spacing: -0.04em;
+	color: #ffffff;
+} */
+
+@media (max-width: 640px) {
+	.create-task-form {
+		padding: 20px;
+		border-radius: 18px;
+	}
+
+	.create-task-form button[type="submit"] {
+		width: 100%;
+	}
+
+	.create-task-form input[type="date"] {
+		max-width: 100%;
+	}
+}

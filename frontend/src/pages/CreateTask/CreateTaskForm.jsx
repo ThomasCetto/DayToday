@@ -7,15 +7,21 @@ function CreateTaskForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault(); // prevent reload
-    const formData = new FormData(e.target);
-    const payload = Object.fromEntries(formData.entries());
-    await apiFetch("/api/tasks", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-    });
+    try {
+      const formData = new FormData(e.target);
+      const payload = Object.fromEntries(formData.entries());
+      await apiFetch("/api/tasks", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
+      });
+    } catch (err) {
+      console.error(err);
+    } finally {
+      e.target.reset(); // clear fields 
+    }
   };
 
   const createSkipDayButton = (offset, text) => { 
@@ -38,20 +44,28 @@ function CreateTaskForm() {
   return (
     <>
       <h1>Add task</h1>
-      <form method='POST' onSubmit={handleSubmit}>
-        <label htmlFor='title'> Task title:</label><br/>
-        <input name='title' id='title'/><br/>
+      <form className="create-task-form" method='POST' onSubmit={handleSubmit}>
+        <label htmlFor='title'> Task title:</label>
+        <input name='title' id='title' required/>
 
-        <label htmlFor='description'> Task description:</label><br/>
-        <textarea name='description' id='description' className='large-text-field'/><br/>
+        <label htmlFor='description'> Task description:</label>
+        <textarea name='description' id='description' className='large-text-field'/>
 
-        <label htmlFor='date'> Task date:</label><br/>
-        {createSkipDayButton(-1, "<")}
-        <input name='date' id='date' type='date' defaultValue={new Date().toISOString().slice(0, 10)}/>
-        {createSkipDayButton(1, ">")}
-        <br/>
+        <label htmlFor='date'> Task date:</label>
+        <div className="date-row">
+          {createSkipDayButton(-1, "<")}
+          <input
+            name="date"
+            id="date"
+            type="date"
+            defaultValue={new Date().toISOString().slice(0, 10)}
+            required
+          />
+          {createSkipDayButton(1, ">")}
+        </div>
+        
 
-        <label htmlFor='gapType'> Repeat:</label><br/>
+        <label htmlFor='gapType'> Repeat:</label>
         <select 
           name='gapType' 
           id='gapType'
@@ -62,12 +76,12 @@ function CreateTaskForm() {
           <option value='week'>Every X weeks</option>
           <option value='month'>Every X months</option>
           <option value='year'>Every X years</option>
-        </select><br/>
+        </select>
 
         {selectedGapType !== "none" && (
           <>
-            <label htmlFor='gapAmount'>Choose X:</label><br/>
-            <input name='gapAmount' id='gapAmount' /><br/>
+            <label htmlFor='gapAmount'>Choose X:</label>
+            <input name='gapAmount' id='gapAmount' />
           </>
         )}
 
