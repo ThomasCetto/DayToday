@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef } from "react";
 import "./WordTab.css";
 
 function WordTab({
@@ -8,67 +8,22 @@ function WordTab({
     definitions = [],
     phonetic,
     audioUrl,
-    fallbackAudioUrl,
     prevButton,
     nextButton,
 	meaningIndex,
 	totalMeanings
 }) {
     const audioRef = useRef(null);
-    const [audioAvailable, setAudioAvailable] = useState(false);
-
-    useEffect(() => {
-        const checkAudio = async () => {
-            try {
-                const res = await fetch(audioUrl, { method: "HEAD" });
-                if (res.ok) {
-                    setAudioAvailable(true);
-                    return;
-                }
-            } catch (err) {
-                console.error(err);
-            }
-
-            if (fallbackAudioUrl) {
-                try {
-                    const res = await fetch(fallbackAudioUrl, { method: "HEAD" });
-                    if (res.ok) {
-                        setAudioAvailable(true);
-                        return;
-                    }
-                } catch (err) {
-                    console.error(err);
-                }
-            }
-
-            setAudioAvailable(false);
-        };
-
-        checkAudio();
-    }, [audioUrl, fallbackAudioUrl]);
 
     const playAudio = async (url) => {
-        if (!url || !audioRef.current) return false;
+        if (!url || !audioRef.current) return;
 
-        try {
-            const audio = audioRef.current;
-            audio.pause();
-            audio.currentTime = 0;
-            audio.src = url;
-            audio.load();
-            await audio.play();
-            return true;
-        } catch {
-            return false;
-        }
-    };
-
-    const handlePlayAudio = async () => {
-        const playedPrimary = await playAudio(audioUrl);
-
-        if (!playedPrimary && fallbackAudioUrl) {
-            await playAudio(fallbackAudioUrl);
-        }
+        const audio = audioRef.current;
+        audio.pause();
+        audio.currentTime = 0;
+        audio.src = url;
+        audio.load();
+        await audio.play();
     };
 
     return (
@@ -79,12 +34,12 @@ function WordTab({
                     {phonetic && <p className="word-tab__phonetic">{phonetic}</p>}
                 </div>
 
-                {audioAvailable && (
+                {audioUrl && (
                     <>
                         <button
                             type="button"
                             className="word-tab__play-button"
-                            onClick={handlePlayAudio}
+                            onClick={() => playAudio(audioUrl)}
                             aria-label={`Play pronunciation for ${word}`}
                             title="Play pronunciation"
                         >

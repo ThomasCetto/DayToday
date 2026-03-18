@@ -50,14 +50,18 @@ export const getTodaysWords = async (req, res) => {
             userId: userId,
             nextReview: { $lt: endOfToday },
             level: { $gt: 0, $lt: 5}
-        }).populate('wordId', 'word');
+        })
+        .populate('wordId', 'word')
+        .sort({ _id: 1}); // sort from oldest to newest 
 
         const newWords = await WordProgress.find({
             userId: userId, 
             level: 0
         })
         .limit(req.query.goal)
-        .populate('wordId', 'word');
+        .populate('wordId', 'word')
+        .sort({ _id: 1}); // sort from oldest to newest
+
         const toReviewStrings = toReview.map(wp => ({
             word: wp.wordId.word,
             wordId: wp.wordId._id,

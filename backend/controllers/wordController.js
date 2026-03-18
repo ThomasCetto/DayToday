@@ -42,7 +42,7 @@ export const addWords = async (req, res) => {
     res.status(200).json({ message: "Words added successfully" });
 }
 
-
+// The suggestions returned are ordered from oldest to newest
 export const getSuggestions = async (req, res) => {
     const userId = req.user.userId;
     try {
@@ -59,6 +59,11 @@ export const getSuggestions = async (req, res) => {
                 }
             },
             {
+                $sort: {
+                    _id: 1
+                }
+            },
+            {
                 $project: {
                     _id: 0,
                     wordId: "$_id",
@@ -68,7 +73,8 @@ export const getSuggestions = async (req, res) => {
             {
                 $limit: config.NUMBER_OF_SUGGESTED_WORDS
             }
-        ]);
+        ]).sort({ _id: 1 });  // Sort with oldest first
+
         console.log("Log: successful get suggestions");
         res.status(200).json({words: notLearned});
     } catch (err) {

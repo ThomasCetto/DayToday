@@ -13,7 +13,7 @@ function ManualAddWords() {
         const noFinalComma = noSpaces.replace(/,$/, "");
         const splitted = noFinalComma
             .split(",")
-            .map(cell => cell.trim().replace(/\s+/g, " "))
+            .map(cell => cell.trim().replace(/\s+/g, " "))  // Multiple whitespaces turn into one
             .filter(cell => cell !== "");
         payload.words = splitted;
 

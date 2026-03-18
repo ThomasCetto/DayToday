@@ -23,6 +23,7 @@ function LearnWordsPage() {
                 const response = await apiFetch(endpoint, { method: "GET" });
                 const data = await response.json();
                 const totalWords = data.newWords.concat(data.toReview);
+                totalWords.reverse();  // Reverse the list so that oldest appear first
                 if (totalWords.length == 0) {
                     setNoWordsAvailable(true);
                 }
@@ -54,11 +55,21 @@ function LearnWordsPage() {
                 const response = await fetch(dictionary_api + currentWord, {method: "GET"});
                 
                 let data = await response.json();
+
+                // Merge the different meanings in the first array
+                let mergedMeanings = [];
+                for(let i=0; i<data.length; i++) {
+                    mergedMeanings = mergedMeanings.concat(data[i].meanings);
+                } 
+                data[0].meanings = mergedMeanings;
+                
+                // Sort meanings by length
                 if (data && Array.isArray(data)) {   // if the definition does not exist
                     data[0].meanings.sort((a, b) => {
                         return (b.definitions?.length ?? 0) - (a.definitions?.length ?? 0);
                     });
                 }
+
                 setDefinition(data[0]);
             } catch (err) {
                 setError("Error while fetching suggestions: ", err.message);
@@ -128,11 +139,16 @@ function LearnWordsPage() {
             />
         );
     }
-    
+
+    // Words.length > 0 and definition != null and isRevealed == true 
 
     
-    // Words.length > 0 and definition != null and isRevealed == true 
-    const audioApiEndpoint = "https://api.dictionaryapi.dev/media/pronunciations/en/";
+
+    const audioUrls = definition.phonetics
+        .map((p => p.audio))
+        .filter(audio => audio); // filters empty entries
+    const chosenAudioUrl = (audioUrls.length !== 0) ? audioUrls[0] : "";
+    
     return (
         <>  
             <div className="learn-words-page__content">
@@ -140,8 +156,7 @@ function LearnWordsPage() {
                     meanings={definition.meanings}
                     capitalizedWord={definition.word.charAt(0).toUpperCase() + definition.word.slice(1)}
                     phonetic={definition.phonetic}
-                    audioUrl={audioApiEndpoint + definition.word + "-us.mp3"}
-                    fallbackAudioUrl={audioApiEndpoint + definition.word + "-uk.mp3"}
+                    audioUrl={chosenAudioUrl}
                 />
 
 

@@ -25,6 +25,7 @@ function SuggestWords() {
                     throw new Error("You must be logged in to use this page");
                 if (!response.ok) throw new Error("Couldnt fetch words");
                 const data = await response.json();
+                data.words.reverse();
                 setSuggestions(data.words);
             } catch (err) {
                 setError(err.message);
@@ -50,6 +51,14 @@ function SuggestWords() {
                 const dictionary_api = "https://api.dictionaryapi.dev/api/v2/entries/en/";
                 const response = await fetch(dictionary_api + currentWord, {method: "GET"});
                 const data = await response.json();
+                
+                // Merge meanings into one array if they are separated
+                let mergedMeanings = [];
+                for(let i=0; i<data.length; i++) {
+                    mergedMeanings = mergedMeanings.concat(data[i].meanings);
+                } 
+                data[0].meanings = mergedMeanings;
+
                 setWordData(data[0]);
             } catch (err) {
                 setError("Error while fetching suggestions: ", err.message);
@@ -70,7 +79,14 @@ function SuggestWords() {
     if (loading1 || loading2) return <p>Loading...</p>;
     if (error) return <p>Error: {error}</p>;
 
-    const audioApiEndpoint = "https://api.dictionaryapi.dev/media/pronunciations/en/";
+    let chosenAudioUrl = "";
+    if (wordData != null) {
+        
+        const audioUrls = wordData.phonetics
+            .map((p => p.audio))
+            .filter(audio => audio); // filters empty entries
+        chosenAudioUrl = (audioUrls.length !== 0) ? audioUrls[0] : "";
+    }
 
     return (
         <>
@@ -99,8 +115,7 @@ function SuggestWords() {
                                     meanings={wordData.meanings}
                                     capitalizedWord={wordData.word.charAt(0).toUpperCase() + wordData.word.slice(1)}
                                     phonetic={wordData.phonetic}
-                                    audioUrl={audioApiEndpoint + wordData.word + "-us.mp3"}
-                                    fallbackAudioUrl={audioApiEndpoint + wordData.word + "-uk.mp3"}
+                                    audioUrl={chosenAudioUrl}
                                 />
 
                                 {/* Buttons to set the word as known or to-learn */}

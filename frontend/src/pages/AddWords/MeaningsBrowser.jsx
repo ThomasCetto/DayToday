@@ -2,7 +2,7 @@ import { useState } from "react";
 import WordTab from "./WordTab";
 import "./MeaningsBrowser.css";
 
-function DictionaryView({ meanings, capitalizedWord, phonetic, audioUrl, fallbackAudioUrl }) {
+function DictionaryView({ meanings, capitalizedWord, phonetic, audioUrl }) {
     const [meaningIndex, setMeaningIndex] = useState(0);
 
     if (!meanings || meanings.length === 0) {
@@ -47,7 +47,6 @@ function DictionaryView({ meanings, capitalizedWord, phonetic, audioUrl, fallbac
             definitions={meaning.definitions}
             phonetic={phonetic}
             audioUrl={audioUrl}
-            fallbackAudioUrl={fallbackAudioUrl}
             prevButton={prevButton}
             nextButton={nextButton}
 			meaningIndex={meaningIndex}
