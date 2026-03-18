@@ -7,9 +7,14 @@ function ManualAddWords() {
         const formData = new FormData(e.target);
         const payload = Object.fromEntries(formData.entries());
         if (!payload.words) { return; }
+        
+        // Clean input
         const noSpaces = payload.words.trim();
-        const noFinalComma= noSpaces.replace(/,$/, "");
-        const splitted = noFinalComma.split(",");
+        const noFinalComma = noSpaces.replace(/,$/, "");
+        const splitted = noFinalComma
+            .split(",")
+            .map(cell => cell.trim().replace(/\s+/g, " "))
+            .filter(cell => cell !== "");
         payload.words = splitted;
 
         await apiFetch("/api/words", {
