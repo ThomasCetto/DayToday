@@ -4,7 +4,7 @@ import "./CreateTaskForm.css";
 
 function CreateTaskForm() {
   const [selectedGapType, setSelectedGapType] = useState('none');
-  const [successMessage, setSuccessMessage] = useState("");
+  const [submitWasSuccessful, setSubmitWasSuccessful] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault(); // prevent reload
@@ -18,9 +18,9 @@ function CreateTaskForm() {
           },
           body: JSON.stringify(payload),
       });
-      setSuccessMessage("Task created successfully!");
+      setSubmitWasSuccessful(true);
       e.target.reset(); // clear fields 
-      setTimeout(() => setSuccessMessage(""), 3000);
+      setTimeout(() => setSubmitWasSuccessful(false), 2000);
     } catch (err) {
       console.error(err);
     }
@@ -89,8 +89,8 @@ function CreateTaskForm() {
 
         
 
-        <button type="submit" className={"create-task-form-submit " + (successMessage ? "successful" : "")}>
-          {(successMessage ? "Created!" : "Create")}
+        <button type="submit" className={"create-task-form-submit " + (submitWasSuccessful ? "successful" : "")}>
+          {(submitWasSuccessful ? "Created!" : "Create")}
         </button>
           
       

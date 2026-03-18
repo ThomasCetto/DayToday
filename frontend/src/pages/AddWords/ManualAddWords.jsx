@@ -1,7 +1,10 @@
+import { useState } from "react";
 import { apiFetch } from "../../utils/wrappers";
 import "./ManualAddWords.css";
 
 function ManualAddWords() {
+    const [submitWasSuccessful, setSubmitWasSuccessful] = useState(false);
+
     const handleSubmit = async (e) => {
         e.preventDefault(); // prevent reload
         const formData = new FormData(e.target);
@@ -25,10 +28,11 @@ function ManualAddWords() {
                 },
                 body: JSON.stringify(payload),
             });
+            setSubmitWasSuccessful(true);
+            e.target.reset(); // clear fields 
+            setTimeout(() => setSubmitWasSuccessful(false), 2000);
         } catch(err) {
             console.error(err);
-        } finally {
-            e.target.reset(); // clear fields 
         }
     };
 
@@ -51,8 +55,11 @@ function ManualAddWords() {
                     
 
                 <br />
-                <button type="submit" className="manual-submit-button">
+                {/* <button type="submit" className="manual-submit-button">
                     Add
+                </button> */}
+                <button type="submit" className={"manual-submit-button " + (submitWasSuccessful ? "successful" : "")}>
+                    {(submitWasSuccessful ? "Added!" : "Add")}
                 </button>
             </form>
         </>
