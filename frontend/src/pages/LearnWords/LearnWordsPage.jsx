@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import "./LearnWordsPage.css";
 import { apiFetch }  from "../../utils/wrappers.js";
-import PostponeButton from "./PostponeButton.jsx";
 import MeaningsBrowser from "../AddWords/MeaningsBrowser.jsx";
 import HiddenCard from "./HiddenCard.jsx";
 import { Link } from "react-router";
+import PostponeGroup from "./PostponeGroup.jsx";
 
 function LearnWordsPage() {
     const [words, setWords] = useState([]);
@@ -144,16 +144,11 @@ function LearnWordsPage() {
                     fallbackAudioUrl={audioApiEndpoint + definition.word + "-uk.mp3"}
                 />
 
-
                 <div className="learn-words-page__review-actions">
-                    <PostponeButton numberOfDays={1} onClick={postponeWord} />
-                    <PostponeButton numberOfDays={2} onClick={postponeWord} />
-                    <PostponeButton numberOfDays={3} onClick={postponeWord} />
-                    <PostponeButton numberOfDays={5} onClick={postponeWord} />
-                    <PostponeButton numberOfDays={7} onClick={postponeWord} />
-                    <PostponeButton numberOfDays={14} onClick={postponeWord} />
-                    <PostponeButton numberOfDays={30} onClick={postponeWord} />
-                    <PostponeButton numberOfDays={-1} onClick={postponeWord} />
+                    <PostponeGroup
+                        options={[1, 2, 3, 5, 7, 14, 30, -1]}
+                        onClick={postponeWord}
+                    />
                 </div>
             </div>
             

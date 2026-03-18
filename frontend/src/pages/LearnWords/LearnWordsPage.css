@@ -1,3 +1,6 @@
+/* 
+	Start of title glow animation
+*/
 @property --angle {
 	syntax: '<angle>';
 	initial-value: 0deg;
@@ -52,25 +55,15 @@
 	pointer-events: none;
 }
 
-
 @keyframes completion-title-rotate {
 	to {
 		--angle: 360deg;
 	}
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
+/* 
+	End of title glow animation
+*/
 
 .learn-words-page__content {
 	position: relative;
@@ -89,7 +82,7 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	gap: 12px;
+	/* gap: 12px; */
 	padding: 12px 16px;
 	box-sizing: border-box;
 	background: transparent;
@@ -99,37 +92,6 @@
 /* keep the button row visually centered with a max width */
 .learn-words-page__review-actions > * {
 	flex: 0 0 auto;
-}
-
-.postpone-button__button {
-	padding: 11px 26px;
-	border-radius: 10px;
-	border: 1px solid #6366f1;
-
-	background: linear-gradient(135deg, #6366f1, #7c7ff5);
-	color: white;
-
-	font-size: 15px;
-	font-weight: 600;
-	font-family: Arial, sans-serif;
-
-	cursor: pointer;
-	transition: all 0.2s ease;
-
-	box-shadow: 0 0 0 1px rgba(99,102,241,0.3),
-	            0 6px 14px rgba(99,102,241,0.35);
-}
-
-.postpone-button__button:hover {
-	background: linear-gradient(135deg, #7c7ff5, #8b8df7);
-	box-shadow: 0 0 0 1px rgba(99,102,241,0.4),
-	            0 8px 18px rgba(99,102,241,0.45);
-	transform: translateY(-1px);
-}
-
-.postpone-button__button:active {
-	transform: translateY(1px);
-	box-shadow: 0 3px 8px rgba(99,102,241,0.4);
 }
 
 .learn-words-page__delete-button {

@@ -1,0 +1,49 @@
+.postpone-group {
+	display: flex;
+	align-items: center;
+	overflow: hidden;
+
+	border-radius: 12px;
+	border: 1px solid #6366f1;
+
+	background: linear-gradient(135deg, #6366f1, #7c7ff5);
+	box-shadow: 0 6px 14px rgba(99,102,241,0.35);
+}
+
+.postpone-group__label {
+	padding: 0 12px;
+	color: rgba(255,255,255,0.8);
+	font-weight: 500;
+	font-size: 14px;
+	white-space: nowrap;
+}
+
+.postpone-group__item {
+	padding: 11px 14px;
+	border: none;
+	background: transparent;
+	color: white;
+
+	font-size: 14px;
+	font-weight: 600;
+	font-family: Arial, sans-serif;
+
+	cursor: pointer;
+	transition: all 0.2s ease;
+
+	/* vertical divider */
+	border-left: 1px solid rgba(255,255,255,0.25);
+}
+
+/* remove divider from first item */
+.postpone-group__item:first-of-type {
+	border-left: 1px solid rgba(255,255,255,0.25);
+}
+
+.postpone-group__item:hover {
+	background: rgba(255,255,255,0.15);
+}
+
+.postpone-group__item:active {
+	background: rgba(0,0,0,0.2);
+}
