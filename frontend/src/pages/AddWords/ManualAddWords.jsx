@@ -7,12 +7,12 @@ function ManualAddWords() {
         const formData = new FormData(e.target);
         const payload = Object.fromEntries(formData.entries());
         if (!payload.words) { return; }
-        const noSpaces = payload.words.replace(/\s+/g, "");
+        const noSpaces = payload.words.trim();
         const noFinalComma= noSpaces.replace(/,$/, "");
         const splitted = noFinalComma.split(",");
         payload.words = splitted;
 
-        const response = await apiFetch("/api/words", {
+        await apiFetch("/api/words", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
