@@ -30,6 +30,7 @@ export const createTask = async (req, res) => {
     try {
         await newTask.save();
         await createInstances(req, newTask);
+        console.log("Log: successful create task");
         res.status(200).json({ message: "task created" });
     } catch (error) {
         console.error(error);
@@ -50,6 +51,7 @@ export const getTask = async (req, res) => {
             return res.status(404).json({ error: "Task not found" });
         }
 
+        console.log("Log: successful GET task");
         res.status(200).json(task);
     } catch (err) {
         console.error(err);
@@ -78,6 +80,7 @@ export const deleteTask = async (req, res) => {
         await TaskInstance.deleteMany({ task: id });
         await Task.findByIdAndUpdate(id, {isDeleted: true});
 
+        console.log("Log: successful task delete");
         res.status(200).json({ message: "Task and related TaskInstances deleted successfully" });
     } catch (err) {
         console.error(err);
@@ -114,6 +117,8 @@ export const putTask = async (req, res) => {
         startOfToday.setHours(0,0,0,0);
         await TaskInstance.deleteMany({ task: id, date: { $gte: startOfToday }});
         await createInstances(req, updatedTask);
+
+        console.log("Log: successful task PUT");
         res.status(200).json({ message: "Task edited successfully", task: updatedTask });
     } catch (err) {
         console.error(err);
@@ -164,9 +169,11 @@ export const getOngoingTasks = async (req, res) => {
                 };
             })
         );
+        
+        console.log("Log: successful get non-deleted tasks");
         res.status(200).json({'tasks': stats});
     } catch(err) {
-        console.log(err)
+        console.error(err)
         res.status(500).json({error: "Server error"});
     }
 }

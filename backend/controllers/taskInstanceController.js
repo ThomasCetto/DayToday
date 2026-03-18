@@ -14,6 +14,8 @@ export const getTaskInstance = async (req, res) => {
         if (!taskInstance) {
             return res.status(404).json({ error: "TaskInstance not found" });
         }
+
+        console.log("Log: successful GET task instance");
         res.status(200).json(taskInstance);
     } catch (err) {
         console.error(err);
@@ -32,6 +34,8 @@ export const deleteTaskInstance = async (req, res) => {
         if (!taskInstance) {
             return res.status(404).json({ error: "TaskInstance not found" });
         }
+
+        console.log("Log: successful delete task instance");
         res.status(200).json({ message: "TaskInstance deleted successfully" });
     } catch (err) {
         console.error(err);
@@ -70,6 +74,7 @@ export const patchTaskInstance = async (req, res) => {
         
         await taskInstance.save();
 
+        console.log("Log: successful task instance patch");
         res.status(200).json({ message: "TaskInstance updated", taskInstance });
     } catch (err) {
         console.error(err);
@@ -111,6 +116,8 @@ export const getTasksFromRange = async (req, res) => {
             };
             output.push(fullTask);
         }
+
+        console.log("Log: successful GET-range of task instances");
         return res.status(200).json({'tasks': output});
 
     } catch (err) {

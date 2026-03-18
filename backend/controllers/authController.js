@@ -58,7 +58,8 @@ export const googleAuth = async (req, res) => {
                 expiresIn: "7d"
             }
         );
-
+        
+        console.log("Log: An user successfully authenticated");
         return res.status(200).json({
             message: "Google authentication was successful",
             token,

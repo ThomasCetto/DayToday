@@ -9,9 +9,7 @@ function EditTaskForm({id, title, description, date, gapType, gapAmount, parentO
     e.preventDefault(); // prevent reload
     const formData = new FormData(e.target);
     const payload = Object.fromEntries(formData.entries());
-    console.log(payload)
     try {
-      console.log(JSON.stringify(payload));
       const response = await apiFetch("/api/tasks/" + id, {
           method: "PUT",
           headers: {

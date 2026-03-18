@@ -23,6 +23,7 @@ export const postWordProgress = async (req, res) => {
             nextReview: today
         });
         await newProgress.save();
+        console.log("Log: successful new word progress creation");
         res.status(200).json({message: "Progress saved successfully"});
     } catch (err) {
         console.error(err);
@@ -68,6 +69,7 @@ export const getTodaysWords = async (req, res) => {
             level: wp.level
         }));
 
+        console.log("Log: successful get today's words");
         res.status(200).json({ toReview: toReviewStrings, newWords: newWordsStrings });
     } catch (error) {
         console.error(error);
@@ -76,7 +78,6 @@ export const getTodaysWords = async (req, res) => {
 }
 
 export const patchWordProgress = async (req, res) => {
-    console.log(req.body)
     const neededParams = [];
     const paramError = checkFields(req.body, neededParams);
     if (paramError.length !== 0) {  // if some param is missing
@@ -85,10 +86,6 @@ export const patchWordProgress = async (req, res) => {
     }
 
     const offset = req.body.offset;
-    if (offset === -1) {
-        console.log("word learned");
-
-    }
     const newReview = new Date();
     newReview.setDate(newReview.getDate() + req.body.offset);
     
@@ -104,6 +101,7 @@ export const patchWordProgress = async (req, res) => {
                 level: (offset === -1) ? 5 : 1 
             }
         );
+        console.log("Log: successful patch word progress");
         res.status(200).json({message: "Updated review"});
     } catch(error) {
         console.error(error);

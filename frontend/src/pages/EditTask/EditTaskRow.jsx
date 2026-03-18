@@ -27,7 +27,6 @@ function EditTaskRow({
 
   const deleteTask = async () => {
     try {
-      console.log("Deleting: ", id);
       const endpoint = "api/tasks/" + id;
       await apiFetch(endpoint, { method: "DELETE" });
       setDeleted(true);

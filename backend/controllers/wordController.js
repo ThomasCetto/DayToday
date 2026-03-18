@@ -38,6 +38,7 @@ export const addWords = async (req, res) => {
             console.error("Error while saving dictionary words from user: [" + word + "], ", err);
         }
     });
+    console.log("Log: successful new word addition");
     res.status(200).json({ message: "Words added successfully" });
 }
 
@@ -68,7 +69,7 @@ export const getSuggestions = async (req, res) => {
                 $limit: config.NUMBER_OF_SUGGESTED_WORDS
             }
         ]);
-
+        console.log("Log: successful get suggestions");
         res.status(200).json({words: notLearned});
     } catch (err) {
         console.error(err);
@@ -87,6 +88,7 @@ export const deleteWord = async (req, res) => {
         // TODO: check if the word actually does not have a definition
         await WordProgress.deleteMany({"wordId": wordId});
         await Word.findByIdAndDelete(wordId);
+        console.log("Log: successful word deletion");
         res.status(200).json({ message: "Word deleted successfully" });
     } catch (err) {
         console.error(err.message);

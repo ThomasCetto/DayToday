@@ -19,7 +19,6 @@ function ManualAddWords() {
             },
             body: JSON.stringify(payload),
         });
-        console.log(response)
     };
 
 
