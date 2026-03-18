@@ -8,22 +8,28 @@ function ManualAddWords() {
         const payload = Object.fromEntries(formData.entries());
         if (!payload.words) { return; }
         
-        // Clean input
-        const noSpaces = payload.words.trim();
-        const noFinalComma = noSpaces.replace(/,$/, "");
-        const splitted = noFinalComma
-            .split(",")
-            .map(cell => cell.trim().replace(/\s+/g, " "))  // Multiple whitespaces turn into one
-            .filter(cell => cell !== "");
-        payload.words = splitted;
+        try {
+            // Clean input
+            const noSpaces = payload.words.trim();
+            const noFinalComma = noSpaces.replace(/,$/, "");
+            const splitted = noFinalComma
+                .split(",")
+                .map(cell => cell.trim().replace(/\s+/g, " "))  // Multiple whitespaces turn into one
+                .filter(cell => cell !== "");
+            payload.words = splitted;
 
-        await apiFetch("/api/words", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(payload),
-        });
+            await apiFetch("/api/words", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(payload),
+            });
+        } catch(err) {
+            console.error(err);
+        } finally {
+            e.target.reset(); // clear fields 
+        }
     };
 
 
