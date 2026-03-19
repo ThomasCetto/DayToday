@@ -141,7 +141,7 @@ function LearnWordsPage() {
     }
 
     // Words.length > 0 and definition != null and isRevealed == true 
-
+    console.log(words.at(-1))
     
 
     const audioUrls = definition.phonetics
@@ -157,13 +157,15 @@ function LearnWordsPage() {
                     capitalizedWord={definition.word.charAt(0).toUpperCase() + definition.word.slice(1)}
                     phonetic={definition.phonetic}
                     audioUrl={chosenAudioUrl}
+                    timesSeen={words.at(-1).level}
                 />
 
 
                 <div className="learn-words-page__review-actions">
                     <PostponeGroup
-                        options={[1, 2, 3, 5, 7, 14, 30, -1]}
+                        options={[1, 2, 3, 4, 5, 7, 14, 30, -1]}
                         onClick={postponeWord}
+                        suggested={words.at(-1).level + 1}
                     />
                 </div>
             </div>

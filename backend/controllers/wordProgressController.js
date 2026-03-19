@@ -19,7 +19,7 @@ export const postWordProgress = async (req, res) => {
         const newProgress = new WordProgress({
             userId: userId,
             wordId: req.body.wordId,
-            level: req.body.toLearn ? 0 : 5,  // either first time seeing it or already learned
+            level: req.body.toLearn ? 0 : 100,  // either first time seeing it or already learned
             nextReview: today
         });
         await newProgress.save();
@@ -49,7 +49,7 @@ export const getTodaysWords = async (req, res) => {
         const toReview = await WordProgress.find({
             userId: userId,
             nextReview: { $lt: endOfToday },
-            level: { $gt: 0, $lt: 5}
+            level: { $gt: 0, $lt: 100}
         })
         .populate('wordId', 'word')
         .sort({ _id: 1}); // sort from oldest to newest 
@@ -100,9 +100,22 @@ export const patchWordProgress = async (req, res) => {
                 userId: userId,
                 wordId: req.body.wordId
             },
+            [
+                {
+                    $set: {
+                        nextReview: newReview,
+                        level: {
+                            $cond: {
+                                if: { $eq: [offset, -1] },
+                                then: 100,
+                                else: { $add: ["$level", 1] }
+                            }
+                        }
+                    }
+                }
+            ],
             {
-                nextReview: newReview,
-                level: (offset === -1) ? 5 : 1 
+                updatePipeline: true
             }
         );
         console.log("Log: successful patch word progress");

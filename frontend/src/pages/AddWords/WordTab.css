@@ -26,9 +26,10 @@
 }
 
 .word-tab__phonetic {
-    margin: 10px 0 0;
+    margin: 10px 25px 0px;
     font-size: 1.05rem;
     color: #b9a7ff;
+    text-align: left;
 }
 
 .word-tab__play-button {
@@ -139,4 +140,13 @@
         width: 54px;
         height: 54px;
     }
+}
+
+.word-tab__repetition {
+    margin-left: 18px;
+
+    font-size: 0.35em;
+    font-weight: normal;
+    letter-spacing: 0.01px;
+    opacity: 0.3;
 }

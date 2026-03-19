@@ -116,6 +116,7 @@ function SuggestWords() {
                                     capitalizedWord={wordData.word.charAt(0).toUpperCase() + wordData.word.slice(1)}
                                     phonetic={wordData.phonetic}
                                     audioUrl={chosenAudioUrl}
+                                    timesSeen={0}
                                 />
 
                                 {/* Buttons to set the word as known or to-learn */}

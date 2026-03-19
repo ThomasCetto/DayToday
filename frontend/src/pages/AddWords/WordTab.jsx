@@ -11,7 +11,8 @@ function WordTab({
     prevButton,
     nextButton,
 	meaningIndex,
-	totalMeanings
+	totalMeanings,
+    timesSeen
 }) {
     const audioRef = useRef(null);
 
@@ -30,8 +31,14 @@ function WordTab({
         <div className="word-tab">
             <div className="word-tab__header">
                 <div>
-                    <h1 className="word-tab__title">{word}</h1>
+                    <h1 className="word-tab__title">
+                        {word}
+                        { (timesSeen > 0) && <sup className="word-tab__repetition">
+                            {timesSeen} times
+                        </sup>}
+                        </h1>
                     {phonetic && <p className="word-tab__phonetic">{phonetic}</p>}
+                    
                 </div>
 
                 {audioUrl && (

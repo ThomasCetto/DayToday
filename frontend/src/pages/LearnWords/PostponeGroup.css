@@ -32,7 +32,7 @@
 	transition: all 0.2s ease;
 
 	/* vertical divider */
-	border-left: 1px solid rgba(255,255,255,0.25);
+	border-left: 1px solid rgba(255,255,255,0.1);
 }
 
 /* remove divider from first item */
@@ -42,8 +42,26 @@
 
 .postpone-group__item:hover {
 	background: rgba(255,255,255,0.15);
+	padding: 11px 16px;
 }
 
 .postpone-group__item:active {
-	background: rgba(0,0,0,0.2);
+	background: white;
+    color: #4f46e5;
+
+    border-left: none;
+    border-radius: 4px;
+
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
 }
+
+.postpone-group__item.suggested {
+    background: white;
+    color: #4f46e5;
+
+    border-left: none;
+    border-radius: 4px;
+
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
