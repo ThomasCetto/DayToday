@@ -40,9 +40,12 @@
 }
 
 .tasks-column ul::-webkit-scrollbar-thumb {
-	background: rgba(0,0,0,0.5);
-	border-radius: 3px;
-    border: 1px solid rgba(124, 58, 237, 0.35);
+	background: rgba(99, 102, 241, 0.35);
+	border-radius: 6px;
+}
+
+.tasks-column ul::-webkit-scrollbar-thumb:hover {
+	background: rgba(99, 102, 241, 0.55);
 }
 
 
