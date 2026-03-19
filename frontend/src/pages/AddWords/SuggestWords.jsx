@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import "./SuggestWords.css";
 import { apiFetch } from "../../utils/wrappers";
-import WordTab from "./WordTab";
 import MeaningsBrowser from "./MeaningsBrowser";
 import AlreadyKnowButton from "./AlreadyKnowButton";
 import WantToLearnButton from "./WantToLearnButton";
@@ -41,12 +40,16 @@ function SuggestWords() {
 
     useEffect(() => {
         if (suggestions.length === 0 ) {
+            setWordData(null);
             setLoading2(false);
             return;
         }
 
         const fetchDefinition = async () => {
             try {
+                setLoading2(true);
+                setWordData(null);
+
                 const currentWord = suggestions.at(-1).word
                 const dictionary_api = "https://api.dictionaryapi.dev/api/v2/entries/en/";
                 const response = await fetch(dictionary_api + currentWord, {method: "GET"});
@@ -81,7 +84,6 @@ function SuggestWords() {
 
     let chosenAudioUrl = "";
     if (wordData != null) {
-        
         const audioUrls = wordData.phonetics
             .map((p => p.audio))
             .filter(audio => audio); // filters empty entries
