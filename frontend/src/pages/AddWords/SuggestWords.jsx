@@ -52,7 +52,7 @@ function SuggestWords() {
                 setLoading2(true);
                 setWordData(null);
 
-                const currentWord = suggestions.at(-1).word
+                const currentWord = suggestions.at(-1).word;
                 const dictionary_api = "https://api.dictionaryapi.dev/api/v2/entries/en/";
                 const response = await fetch(dictionary_api + currentWord, {method: "GET"});
                 const data = await response.json();

@@ -1,5 +1,6 @@
 import { useRef } from "react";
 import "./WordTab.css";
+import  DefinitionRow from "./DefinitionRow";
 
 function WordTab({
     word,
@@ -77,11 +78,11 @@ function WordTab({
                     <h2 className="word-tab__section-title">Definitions</h2>
                     <ol className="word-tab__definitions">
                         {definitions.map((definition, index) => (
-                            <li key={index} className="word-tab__definition-item">
-                                {typeof definition === "string"
-                                    ? definition
-                                    : definition.definition}
-                            </li>
+                            <DefinitionRow 
+                                key={index}
+                                definition={definition.definition}
+                                example={definition.example}
+                            />
                         ))}
                     </ol>
                 </section>

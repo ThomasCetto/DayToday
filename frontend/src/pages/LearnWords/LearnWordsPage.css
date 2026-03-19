@@ -72,6 +72,7 @@
 	margin: 0 auto;
 	padding-bottom: 88px; /* reserve space for sticky buttons */
 	box-sizing: border-box;
+	padding-top: 1px;  /* needed to remove empty space above background */
 }
 
 .learn-words-page__review-actions {

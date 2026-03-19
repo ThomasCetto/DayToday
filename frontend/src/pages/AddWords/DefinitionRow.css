@@ -1,0 +1,67 @@
+.word-tab__definition-item {
+	list-style-position: outside;
+	margin-left: 20px; /* space for numbers */
+}
+
+.definition-row-inner {
+	display: grid;
+	grid-template-columns: auto 1fr;
+	column-gap: 8px;
+}
+
+.word-tab__definition-text {
+	min-width: 0;
+}
+
+.word-tab__tooltip-wrapper {
+	position: relative;
+	display: inline-block;
+}
+
+.word-tab__tooltip-text {
+	position: absolute;
+	bottom: 125%;
+	left: 50%;
+	transform: translateX(-50%);
+
+	background: #111;
+	color: white;
+	padding: 6px 10px;
+	border-radius: 6px;
+	font-size: 13px;
+
+	white-space: nowrap;
+	width: auto;
+	height: auto;
+	min-height: unset;
+
+	z-index: 10000;
+}
+
+.word-tab__definition-tooltip-button {
+	padding: 4px 10px;
+	border-radius: 8px;
+	border: 1px solid rgba(99, 102, 241, 0.5);
+	background: rgba(99, 102, 241, 0.45);
+	color: #c7d2fe;
+	font-size: 12px;
+	font-weight: 600;
+	cursor: pointer;
+	transition: all 0.15s ease;
+}
+
+.word-tab__definition-tooltip-button:hover {
+	background: rgba(76, 78, 232, 0.25);
+	border-color: rgba(99, 102, 241, 0.8);
+}
+
+.word-tab__definition-tooltip-button:active {
+	transform: translateY(1px);
+}
+
+.word-tab__definition-tooltip-button.no-example {
+	visibility: hidden;
+	pointer-events: none;
+	user-select: none;
+}
+

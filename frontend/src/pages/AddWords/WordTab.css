@@ -100,11 +100,11 @@
 .word-tab__definitions {
     margin: 0;
     padding-left: 20px;
+    text-align: left;
 }
 
 .word-tab__definition-item {
     margin-bottom: 12px;
-    line-height: 1.7;
     color: #d4d4e0;
 }
 
