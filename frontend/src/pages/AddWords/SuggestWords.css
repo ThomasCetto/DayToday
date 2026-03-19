@@ -86,3 +86,7 @@
     outline: 3px solid rgba(239, 68, 68, 0.4);
     outline-offset: 4px;
 }
+
+.suggestion-empty-div {
+	height: 55vh;
+}

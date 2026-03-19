@@ -25,7 +25,9 @@ function SuggestWords() {
                 if (!response.ok) throw new Error("Couldnt fetch words");
                 const data = await response.json();
                 data.words.reverse();
-                setSuggestions(data.words);
+                if (data.words.length !== 0) {
+                    setSuggestions(data.words);
+                }
             } catch (err) {
                 setError(err.message);
             } finally {
@@ -121,6 +123,8 @@ function SuggestWords() {
                                     timesSeen={0}
                                 />
 
+                                <div className="suggestion-empty-div"></div>
+
                                 {/* Buttons to set the word as known or to-learn */}
                                 <div className="suggestion-actions">
                                     <AlreadyKnowButton 
@@ -137,6 +141,7 @@ function SuggestWords() {
                                         }}
                                     />
                                 </div>
+                                
                             </>
                         )}
                     </>
