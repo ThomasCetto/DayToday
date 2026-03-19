@@ -141,8 +141,6 @@ function LearnWordsPage() {
     }
 
     // Words.length > 0 and definition != null and isRevealed == true 
-    console.log(words.at(-1))
-    
 
     const audioUrls = definition.phonetics
         .map((p => p.audio))

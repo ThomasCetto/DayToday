@@ -148,14 +148,14 @@ const createInstances = async (req, newTask) => {
     await TaskInstance.insertMany(instances);
 }
 
-//  Returns all non-deleted Tasks
+//  Returns all non-deleted and non-completed Tasks
 export const getOngoingTasks = async (req, res) => {
     try {
         const userId = req.user.userId;
         const tasks = await Task.find({ userId, isDeleted: false });
         const endOfToday = new Date();
         endOfToday.setHours(23, 59, 59, 999);
-        const stats = await Promise.all(
+        const stats = (await Promise.all(
             tasks.map(async (task) => {
                 const total = await TaskInstance.countDocuments({ task: task._id, date: {$lte: endOfToday}});
                 const completed = await TaskInstance.countDocuments({
@@ -168,9 +168,9 @@ export const getOngoingTasks = async (req, res) => {
                     completed
                 };
             })
-        );
+        )).filter(s => !(s.completed === 1 && s.task.gapType === 'none'));  // Take only non-completed
         
-        console.log("Log: successful get non-deleted tasks");
+        console.log("Log: successful get non-deleted and non-completed tasks");
         res.status(200).json({'tasks': stats});
     } catch(err) {
         console.error(err)
