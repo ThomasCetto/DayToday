@@ -123,6 +123,13 @@
 	transform: translateY(-1px);
 }
 
+.gap-amount-field {
+	width: 35%;
+	text-align: center;
+	max-width: 35%;
+	align-self: center;
+}
+
 
 @media (max-width: 640px) {
 	.create-task-form {
