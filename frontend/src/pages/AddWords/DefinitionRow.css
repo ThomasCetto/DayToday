@@ -22,7 +22,7 @@
 	position: absolute;
 	bottom: 125%;
 	left: 50%;
-	transform: translateX(-50%);
+	transform: translateX(-10%);
 
 	background: #111;
 	color: white;
@@ -69,5 +69,10 @@
 	.word-tab__definition-tooltip-button {
 		padding: 3px 4px;
 		font-size: 9px;
+	}
+
+	.word-tab__tooltip-text {
+		white-space: normal;
+		width: 180px;
 	}
 }
