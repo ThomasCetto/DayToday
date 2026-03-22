@@ -4,10 +4,6 @@ export const requireApiKey = (req, res, next) => {
 	const apiPassword = req.headers["x-api-password"];
 	const expectedPassword = process.env.API_PASSWORD;
 
-    console.log("request: ", apiPassword)
-    console.log("real: ", expectedPassword)
-    
-
 	if (!expectedPassword) {
 		return res.status(500).json({
 			error: "Server API password is not configured"

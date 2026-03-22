@@ -13,7 +13,7 @@ function DefinitionRow( { definition, example }) {
                         className={"word-tab__definition-tooltip-button " + (example ? "" : "no-example")}
                         onClick={() => setShowExample((prev) => !prev)}
                     >
-                        E
+                        Ex
                     </button>
 
                     {showExample && example && (
