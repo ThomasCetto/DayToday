@@ -84,7 +84,7 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	padding: 12px 16px calc(54px + env(safe-area-inset-bottom));
+	padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
 	box-sizing: border-box;
 	z-index: 1000;
 	margin-top: auto;
@@ -157,4 +157,11 @@
     box-shadow:
         0 4px 10px rgba(124, 58, 237, 0.4),
         0 0 8px rgba(124, 58, 237, 0.3);
+}
+
+
+@media (max-width: 767px) {
+	.learn-words-page__review-actions {
+		padding: 12px 16px calc(54px + env(safe-area-inset-bottom));
+	}
 }
