@@ -22,7 +22,7 @@ export const addWords = async (req, res) => {
                 const capitalized = word[0].toUpperCase() + word.slice(1);
                 let wordDB = await Word.findOne({word: capitalized});
                 if (!wordDB) {
-                    wordDB = new Word({word: capitalized, verified: true});   // TODO: CHANGE TO FALSE
+                    wordDB = new Word({word: capitalized, verified: false});
                     await wordDB.save();
                 }
 
