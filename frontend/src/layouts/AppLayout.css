@@ -20,6 +20,9 @@
 	display: flex;
 	flex-direction: column;
 }
+.navbar-title {
+	font-size: 7vw;
+}
 .navbar {
 	grid-area: navbar;
 	display: flex;
@@ -68,4 +71,25 @@
 }
 .auth-layout-container.visible {
 	display: block;
+}
+
+@media (min-width: 768px) {
+	.navbar-title {
+		font-size: 45px;
+	}
+}
+
+@media (max-width: 767px) {
+	.layout {
+		grid-template-columns: 160px 1fr;
+	}
+
+	.layout:not(.collapsed) .navbar-title {
+		font-size: 5vw;
+	}
+
+	.layout:not(.collapsed) .menu-button {
+		width: 55px;
+	}
+
 }

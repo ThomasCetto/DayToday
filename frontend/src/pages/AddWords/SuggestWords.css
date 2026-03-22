@@ -90,3 +90,32 @@
 .suggestion-empty-div {
 	height: 55vh;
 }
+
+@media (max-width: 767px) {
+	.suggestion-actions {
+		gap: 6px;
+		padding: 6px 8px;
+	}
+
+	.suggestion-confirm-button {
+		padding: 5px 11px;
+		width: 40%;
+		border-radius: 6px;
+		border: 1px solid #6366f1;
+
+		background: linear-gradient(135deg, #6366f1, #7c7ff5);
+		color: white;
+
+		font-size: 15px;
+		font-weight: 600;
+		font-family: Arial, sans-serif;
+
+		cursor: pointer;
+		transition: all 0.2s ease;
+
+		/* makes it stand out */
+		box-shadow: 0 0 0 1px rgba(99,102,241,0.3),
+					0 6px 14px rgba(99,102,241,0.35);
+	}
+}
+

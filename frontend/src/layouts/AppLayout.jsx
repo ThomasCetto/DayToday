@@ -45,7 +45,7 @@ export default function AppLayout() {
 			</aside>
 
             <header className="navbar">
-                <h1>{title}</h1>
+                <h1 className="navbar-title">{title}</h1>
                 <UserOnNavbar />
             </header>
         

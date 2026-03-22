@@ -65,3 +65,9 @@
 	user-select: none;
 }
 
+@media (max-width: 767px) {
+	.word-tab__definition-tooltip-button {
+		padding: 3px 4px;
+		font-size: 9px;
+	}
+}

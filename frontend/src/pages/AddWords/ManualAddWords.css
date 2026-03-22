@@ -123,3 +123,12 @@
     visibility: visible;
     opacity: 1;
 }
+
+@media (max-width: 767px) {
+	.tooltip-manual-text {
+		white-space: normal;
+		width: 200px;
+		font-size: 11px;
+		padding: 5px 8px;
+	}
+}

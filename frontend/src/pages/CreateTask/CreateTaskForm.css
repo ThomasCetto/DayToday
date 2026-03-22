@@ -60,12 +60,12 @@
 
 .create-task-form input[type="date"] {
 	max-width: 220px;
+	margin-right: 8px;
 }
 
 /* Style < and > date buttons differently from submit */
 .create-task-form button[type="button"] {
-	padding: 10px 14px;
-	min-width: 42px; 
+	padding: 0.5rem 0.6rem;
 	margin: 0 8px 0 0;
 	border-radius: 12px;
 	font-size: 1rem;
@@ -75,7 +75,7 @@
 .create-task-form-submit {
 	margin-top: 16px;
 	align-self: center;
-    border-color: 6px;;
+    border-color: 6px;
 }
 
 .create-task-form button {
@@ -130,8 +130,12 @@
 	align-self: center;
 }
 
+.create-task-form__change-day-button {
+	background: red;
+}
 
-@media (max-width: 640px) {
+
+@media (max-width: 767px) {
 	.create-task-form {
 		padding: 20px;
 		border-radius: 18px;
@@ -142,6 +146,8 @@
 	}
 
 	.create-task-form input[type="date"] {
-		max-width: 100%;
+		max-width: 50%;
+		font-size: 13px;
 	}
+
 }

@@ -28,7 +28,9 @@ function CreateTaskForm() {
 
   const createSkipDayButton = (offset, text) => { 
     return (
-      <button type='button' 
+      <button 
+        type='button'
+        className="create-task-form__change-day-button" 
         onClick={() => {
           let datePicker = document.getElementById("date");
           let oldDate = datePicker.value;
@@ -83,7 +85,7 @@ function CreateTaskForm() {
         {selectedGapType !== "none" && (
           <>
             <label htmlFor='gapAmount'>Choose X:</label>
-            <input name='gapAmount' id='gapAmount' className="gap-amount-field" />
+            <input type="number" name='gapAmount' id='gapAmount' className="gap-amount-field" />
           </>
         )}
 

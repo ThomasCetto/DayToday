@@ -65,3 +65,34 @@
     box-shadow: 0 2px 6px rgba(0,0,0,0.15);
 }
 
+@media (max-width: 767px) {
+	.postpone-group {
+		flex-wrap: wrap;
+		border-radius: 10px;
+	}
+
+	.postpone-group__label {
+		width: 100%;
+		padding: 0px 4px;
+		font-size: 12px;
+		text-align: center;
+	}
+
+	.postpone-group__item {
+		flex: 1;
+		padding: 6px 4px;
+		font-size: 10px;
+		text-align: center;
+
+		border-left: 1px solid rgba(255,255,255,0.15);
+	}
+
+	/* remove hover effect */
+	.postpone-group__item:hover {
+		padding: 10px 8px;
+	}
+
+	.postpone-group__item:active {
+		border-radius: 6px;
+	}
+}

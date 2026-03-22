@@ -126,22 +126,6 @@
     font-weight: 600;
 }
 
-@media (max-width: 640px) {
-    .word-tab {
-        padding: 20px;
-        border-radius: 18px;
-    }
-
-    .word-tab__header {
-        align-items: flex-start;
-    }
-
-    .word-tab__play-button {
-        width: 54px;
-        height: 54px;
-    }
-}
-
 .word-tab__repetition {
     margin-left: 18px;
 
@@ -149,4 +133,73 @@
     font-weight: normal;
     letter-spacing: 0.01px;
     opacity: 0.3;
+}
+
+
+@media (max-width: 767px) {
+	.word-tab {
+		margin: 16px 10px;
+		padding: 18px;
+		border-radius: 16px;
+	}
+
+	.word-tab__header {
+		flex-wrap: wrap;
+		align-items: flex-start;
+		gap: 12px;
+	}
+
+	.word-tab__title {
+		font-size: clamp(1.5rem, 6vw, 2.2rem);
+		line-height: 1.1;
+	}
+
+	.word-tab__phonetic {
+		margin: 6px 0 0;
+		font-size: 0.95rem;
+	}
+
+	.word-tab__play-button {
+		width: 48px;
+		height: 48px;
+		flex-shrink: 0;
+	}
+
+	.word-tab__badge {
+		padding: 6px 10px;
+		font-size: 0.8rem;
+		margin: 6px 4px 0 0;
+	}
+
+	.word-tab__section {
+		margin-top: 20px;
+		padding-top: 16px;
+	}
+
+	.word-tab__section-title {
+		font-size: 0.85rem;
+	}
+
+	.word-tab__definitions {
+		padding-left: 0;
+		font-size: 0.95rem;
+	}
+
+	.word-tab__definition-item {
+		margin-bottom: 10px;
+	}
+
+	.word-tab__synonyms {
+		gap: 8px;
+	}
+
+	.word-tab__synonym-pill {
+		padding: 6px 10px;
+		font-size: 0.85rem;
+	}
+
+	.word-tab__repetition {
+		font-size: 0.45em;
+		margin-left: 10px;
+	}
 }

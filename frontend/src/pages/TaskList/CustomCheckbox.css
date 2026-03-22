@@ -96,3 +96,37 @@
 .checkbox.checked {
     color: #909090;
 }
+
+@media (max-width: 767px) {
+	.checkbox {
+		font-size: 22px;
+		gap: 0.6em;
+		margin-left: 0;
+		align-items: flex-start;
+	}
+
+	.checkbox:hover {
+		padding-left: 0;
+	}
+
+	.checkbox__box {
+		width: 1.1em;
+		height: 1.1em;
+		margin-top: 0.12em;
+	}
+
+	.checkbox__box svg {
+		width: 0.75em;
+		height: 0.75em;
+	}
+
+	.checkbox__label {
+		max-width: 100%;
+		line-height: 1.7;
+		word-break: break-word;
+	}
+
+	.checkbox__label::after {
+		top: 58%;
+	}
+}
