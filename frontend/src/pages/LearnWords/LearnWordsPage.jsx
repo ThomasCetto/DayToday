@@ -23,7 +23,6 @@ function LearnWordsPage() {
                 const response = await apiFetch(endpoint, { method: "GET" });
                 const data = await response.json();
                 const totalWords = data.newWords.concat(data.toReview);
-                totalWords.reverse();  // Reverse the list so that oldest appear first
                 if (totalWords.length == 0) {
                     setNoWordsAvailable(true);
                 }

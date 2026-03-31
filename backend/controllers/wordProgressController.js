@@ -44,7 +44,6 @@ export const getTodaysWords = async (req, res) => {
     endOfToday.setHours(23,59,59,999);
 
     const userId = req.user.userId;
-    const goal = Number(req.query.goal);
     try {
         const toReview = await WordProgress.find({
             userId: userId,
