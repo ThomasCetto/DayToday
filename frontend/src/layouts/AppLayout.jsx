@@ -3,6 +3,7 @@ import "./AppLayout.css";
 import { useState } from "react";
 import UserOnNavbar from "./UserOnNavbar";
 import LoginPage from "../pages/Login/LoginPage";
+import GlobalSelectionMenu from "./GlobalSelectionMenu";
 
 export default function AppLayout() {
     const [sidebarOpen, setSidebarOpen] = useState(true);
@@ -18,7 +19,7 @@ export default function AppLayout() {
 	};
     const title = titles[location.pathname] || "DayToday";
 
-    // Auth layout is used because the google login button has to be rendered only once, otherwise it gives an harmless warning
+    // Auth layout is used because the google login button has to be rendered only once, otherwise it gives an harmless warning.
     // So I make it render once and display it only when on the login page
     const authLayout = (
         <div className={"auth-layout-container " + ((location.pathname === '/login') ? 'visible' : '')}>
@@ -51,6 +52,8 @@ export default function AppLayout() {
         
             <main className="webpage-content">
                 {authLayout}  {/* Render only once */}
+
+                <GlobalSelectionMenu />
 
                 {(localStorage.username || location.pathname === '/login') ? 
                     <Outlet /> : 
