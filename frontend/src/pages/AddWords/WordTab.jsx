@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import "./WordTab.css";
 import  DefinitionRow from "./DefinitionRow";
+import TranslationPill from "./TranslationPill";
 
 function WordTab({
     word,
@@ -52,9 +53,11 @@ function WordTab({
                             <br/>
                             <div className="word-tab__translations">
                                 {[...new Set(translations)].map((tr, index) => (
-                                    <span key={`${tr}-${index}`} className="word-tab__translation-pill">
-                                        {tr}
-                                    </span>
+                                    <TranslationPill 
+                                        key={index}
+                                        segment={tr[0]}
+                                        translation={tr[1]}
+                                    />
                                 ))}
                             </div>
                         </section>

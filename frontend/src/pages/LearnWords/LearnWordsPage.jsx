@@ -89,15 +89,26 @@ function LearnWordsPage() {
 
                 const response = await fetch(translation_api, {method: "GET"});
                 const data = await response.json();
-                const capitalized_translations = data.matches
-                    .map(match => match.translation.replace(/[^\p{L}\s]/gu, "").trim())  // Remove non-letters
-                    .map(translation => translation.charAt(0).toUpperCase() + translation.slice(1).toLowerCase())  // capitalize
-                    .filter(tr => tr.length < 22 && tr.toLowerCase() !== currentWord)
+                const seen = new Set();
+                const cleaned = data.matches
+                    .map(match => [  // Remove non-letters
+                        match.segment.replace(/[^\p{L}\s]/gu, "").trim(),
+                        match.translation.replace(/[^\p{L}\s]/gu, "").trim(),
+                    ])  
+                    .map(match => [  // Capitalize
+                        match[0].charAt(0).toUpperCase() + match[0].slice(1).toLowerCase(),
+                        match[1].charAt(0).toUpperCase() + match[1].slice(1).toLowerCase(),
+                    ])  
+                    .filter(match => match[1].length < 22 && 
+                        match[1].toLowerCase() !== currentWord &&
+                        !seen.has(match[1].toLowerCase()) &&
+                        seen.add(match[1].toLowerCase())                        
+                    );
 
-                const unique_translations = [...new Set(capitalized_translations)];
-                setTranslations(unique_translations);
+                setTranslations(cleaned);
             } catch {
                 setTranslations([]);
+                console.error("error while fetching the translation");
             } finally {
                 setLoading3(false);
             }
