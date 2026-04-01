@@ -9,8 +9,10 @@ import WantToLearnButton from "./WantToLearnButton";
 function SuggestWords() {
     const [suggestions, setSuggestions] = useState([]);
     const [wordData, setWordData] = useState(null);
+    const [translations, setTranslations] = useState([]);
     const [loading1, setLoading1] = useState(true);
     const [loading2, setLoading2] = useState(true);
+    const [loading3, setLoading3] = useState(true);
     
     const [error, setError] = useState(null);
 
@@ -44,6 +46,7 @@ function SuggestWords() {
         if (suggestions.length === 0 ) {
             setWordData(null);
             setLoading2(false);
+            setLoading3(false);
             return;
         }
 
@@ -72,7 +75,30 @@ function SuggestWords() {
             }
         }
 
+        const fetchTranslation = async () => {
+            try {
+                setLoading3(true);
+                const currentWord = suggestions.at(-1).word.toLowerCase();
+                const translation_api = `https://api.mymemory.translated.net/get?q=${currentWord}&langpair=en|it`;
+
+                const response = await fetch(translation_api, {method: "GET"});
+                const data = await response.json();
+                const capitalized_translations = data.matches
+                    .map(match => match.translation.replace(/[^\p{L}\s]/gu, "").trim())  // Remove non-letters
+                    .map(translation => translation.charAt(0).toUpperCase() + translation.slice(1).toLowerCase())  // capitalize
+                    .filter(tr => tr.length < 22 && tr.toLowerCase() !== currentWord)
+
+                const unique_translations = [...new Set(capitalized_translations)];
+                setTranslations(unique_translations);
+            } catch {
+                setTranslations([]);
+            } finally {
+                setLoading3(false);
+            }
+        }
+
         fetchDefinition();
+        fetchTranslation();
     }, [suggestions]);
 
     const deleteMissingWord = async () => {
@@ -81,7 +107,7 @@ function SuggestWords() {
         setSuggestions(suggestions.slice(0, -1));
     }
 
-    if (loading1 || loading2) return <p>Loading...</p>;
+    if (loading1 || loading2 || loading3) return <p>Loading...</p>;
     if (error) return <p>Error: {error}</p>;
 
     let chosenAudioUrl = "";
@@ -121,6 +147,7 @@ function SuggestWords() {
                                     phonetic={wordData.phonetic}
                                     audioUrl={chosenAudioUrl}
                                     timesSeen={0}
+                                    translations={translations}
                                 />
 
                                 <div className="suggestion-empty-div"></div>

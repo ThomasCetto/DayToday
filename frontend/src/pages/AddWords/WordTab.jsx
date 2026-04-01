@@ -13,7 +13,8 @@ function WordTab({
     nextButton,
 	meaningIndex,
 	totalMeanings,
-    timesSeen
+    timesSeen,
+    translations
 }) {
     const audioRef = useRef(null);
 
@@ -34,12 +35,25 @@ function WordTab({
                 <div>
                     <h1 className="word-tab__title">
                         {word}
-                        { (timesSeen > 0) && <sup className="word-tab__repetition">
-                            {timesSeen} times
-                        </sup>}
-                        </h1>
+                        { (timesSeen > 0) && 
+                            <sup className="word-tab__repetition">
+                                {timesSeen} times
+                            </sup>
+                        }
+                    </h1>
                     {phonetic && <p className="word-tab__phonetic">{phonetic}</p>}
-                    
+                    {translations?.length > 0 && (
+                        <section className="word-tab__translations-section">
+                            <br/>
+                            <div className="word-tab__translations">
+                                {[...new Set(translations)].map((tr, index) => (
+                                    <span key={`${tr}-${index}`} className="word-tab__translation-pill">
+                                        {tr}
+                                    </span>
+                                ))}
+                            </div>
+                        </section>
+                    )}
                 </div>
 
                 {audioUrl && (

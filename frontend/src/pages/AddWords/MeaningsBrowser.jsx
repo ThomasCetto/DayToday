@@ -2,7 +2,7 @@ import { useState } from "react";
 import WordTab from "./WordTab";
 import "./MeaningsBrowser.css";
 
-function MeaningsBrowser({ meanings, capitalizedWord, phonetic, audioUrl, timesSeen }) {
+function MeaningsBrowser({ meanings, capitalizedWord, phonetic, audioUrl, timesSeen, translations }) {
     const [meaningIndex, setMeaningIndex] = useState(0);
 
     if (!meanings || meanings.length === 0) {
@@ -52,6 +52,7 @@ function MeaningsBrowser({ meanings, capitalizedWord, phonetic, audioUrl, timesS
 			meaningIndex={meaningIndex}
 			totalMeanings={meanings.length}
             timesSeen={timesSeen}
+            translations={translations}
         />
     );
 }

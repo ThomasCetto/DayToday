@@ -9,10 +9,13 @@ import PostponeGroup from "./PostponeGroup.jsx";
 function LearnWordsPage() {
     const [words, setWords] = useState([]);
     const [definition, setDefinition] = useState(null);
+    const [translations, setTranslations] = useState([]);
     const [isRevealed, setIsReavealed] = useState(false);
     const [noWordsAvailable, setNoWordsAvailable] = useState(false);
     const [loading1, setLoading1] = useState(true);
     const [loading2, setLoading2] = useState(true);
+    const [loading3, setLoading3] = useState(true);
+    
     const [error, setError] = useState(null);
 
 
@@ -43,6 +46,7 @@ function LearnWordsPage() {
     useEffect(() => {
         if (words.length === 0) {
             setLoading2(false);
+            setLoading3(false);
             return;
         }
 
@@ -70,14 +74,37 @@ function LearnWordsPage() {
                 }
 
                 setDefinition(data[0]);
-            } catch (err) {
-                setError("Error while fetching suggestions: ", err.message);
+            } catch {
+                setDefinition(null);
             } finally {
                 setLoading2(false);
             }
         }
 
+        const fetchTranslation = async () => {
+            try {
+                setLoading3(true);
+                const currentWord = words.at(-1).word.toLowerCase();
+                const translation_api = `https://api.mymemory.translated.net/get?q=${currentWord}&langpair=en|it`;
+
+                const response = await fetch(translation_api, {method: "GET"});
+                const data = await response.json();
+                const capitalized_translations = data.matches
+                    .map(match => match.translation.replace(/[^\p{L}\s]/gu, "").trim())  // Remove non-letters
+                    .map(translation => translation.charAt(0).toUpperCase() + translation.slice(1).toLowerCase())  // capitalize
+                    .filter(tr => tr.length < 22 && tr.toLowerCase() !== currentWord)
+
+                const unique_translations = [...new Set(capitalized_translations)];
+                setTranslations(unique_translations);
+            } catch {
+                setTranslations([]);
+            } finally {
+                setLoading3(false);
+            }
+        }
+
         fetchDefinition();
+        fetchTranslation();
     }, [words]);
 
     const postponeWord = async (numberOfDays) => {
@@ -106,7 +133,7 @@ function LearnWordsPage() {
 
 
     if (error) return <p>Error: {error}</p>;
-    if (loading1 || loading2) return <p>Loading...</p>;
+    if (loading1 || loading2 || loading3) return <p>Loading...</p>;
 
     if (words.length === 0) {
         return (
@@ -155,6 +182,7 @@ function LearnWordsPage() {
                     phonetic={definition.phonetic}
                     audioUrl={chosenAudioUrl}
                     timesSeen={words.at(-1).level}
+                    translations={translations}
                 />
 
 
