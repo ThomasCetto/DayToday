@@ -29,6 +29,11 @@ function WordTab({
         await audio.play();
     };
 
+    // Sort definitions so that those with examples come up first
+    definitions.sort((def1, def2) => {
+        return (def1.example == null) - (def2.example == null);
+    });
+
     return (
         <div className="word-tab">
             <div className="word-tab__header">
