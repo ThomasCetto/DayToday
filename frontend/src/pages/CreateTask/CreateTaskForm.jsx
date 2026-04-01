@@ -85,7 +85,7 @@ function CreateTaskForm() {
         {selectedGapType !== "none" && (
           <>
             <label htmlFor='gapAmount'>Choose X:</label>
-            <input type="number" name='gapAmount' id='gapAmount' className="gap-amount-field" />
+            <input type="number" name='gapAmount' id='gapAmount' className="gap-amount-field" autoComplete="off"/>
           </>
         )}
 
